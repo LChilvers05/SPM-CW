@@ -10,6 +10,7 @@
 
     <Button
         android:id="@+id/log_sleep_button"
+        android:onClick="logSleepTapped"
         android:layout_width="354dp"
         android:layout_height="90dp"
         android:layout_marginStart="16dp"
@@ -27,6 +28,7 @@
 
     <Button
         android:id="@+id/log_screen_time_button"
+        android:onClick="logScreenTimeTapped"
         android:layout_width="354dp"
         android:layout_height="90dp"
         android:layout_marginStart="16dp"

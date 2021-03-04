@@ -2,6 +2,7 @@ package com.example.spmapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void logDataTapped(View view) {
-        Log.d("Test", "Button tapped");
+        Intent logPicker = new Intent(this, LogPickerActivity.class);
+        startActivity(logPicker);
     }
 }
