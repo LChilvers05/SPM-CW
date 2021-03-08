@@ -1,9 +1,11 @@
-package com.example.spmapp;
+package com.example.spmapp.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.spmapp.R;
 
 public class LogPickerActivity extends AppCompatActivity {
 
