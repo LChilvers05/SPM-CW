@@ -23,8 +23,8 @@ public interface SleepDao {
 
     /*@Query("INSERT INTO Sleep VALUES ()")
     public void insertToSleepAsQuery(Date start, Time start, int duration, quality);*/
-    @Query("SELECT durationMins, quality FROM Sleep WHERE startDate = :sDate AND startTime = :sTime")
-    public int[] sleepDateInfo(Date sDate, Time sTime);
+    @Query("SELECT quality FROM Sleep WHERE startTime = :sTime")
+    public int sleepDateInfo(long sTime);
     @Query("SELECT * FROM Sleep")
     public Sleep[] getAllSleeps();
 }

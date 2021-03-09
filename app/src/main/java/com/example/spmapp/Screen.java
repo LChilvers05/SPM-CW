@@ -15,7 +15,7 @@ import java.time.LocalTime;
 public class Screen {
     // since these records are referenced in the ScreenSleepMap, there should probably be a
     // new simple primary key so that it is easier to reference
-    @PrimaryKey(autoGenerate = true);
+    @PrimaryKey(autoGenerate = true)
     public final int screenID;
     @NonNull
     public final Date startDate;
