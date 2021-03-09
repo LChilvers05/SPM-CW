@@ -16,18 +16,14 @@ public class Screen {
     // since these records are referenced in the ScreenSleepMap, there should probably be a
     // new simple primary key so that it is easier to reference
     @PrimaryKey(autoGenerate = true)
-    public final int screenID;
+    public final int screenID = 0;
     @NonNull
-    public final Date startDate;
+    public final long startTime;
     @NonNull
-    public final Time startTime;
-    public final Time endTime;
-    public final int durationMins;
+    public final long endTime;
 
-    public Screen(Date startDate, Time startTime, Time endTime, int durationMins) {
-        this.startDate = startDate;
+    public Screen(long startTime, long endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
-        this.durationMins = durationMins;
     }
 }

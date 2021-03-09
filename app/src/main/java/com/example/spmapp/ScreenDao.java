@@ -24,13 +24,13 @@ public interface ScreenDao {
     // for which we have identified the preceding screen sessions to make it easier to determine
     // from what date and time on we shold be considering screen sessions as preceding a sleep
     // session
-    Sleep s = new Sleep();
-    @Query("SELECT durationMins FROM Screen WHERE startDate = :sDate AND startTime = :sTime")
-    public int screenDateInfo(Date sDate, Time sTime);
-    @Query("SELECT * FROM Sleep")
+    //Sleep s = new Sleep();
+    @Query("SELECT endTime FROM Screen WHERE startTime = :sTime")
+    public long getScreenEndTime(long sTime);
+    @Query("SELECT * FROM Screen")
     public Screen[] getAllScreens();
     // this assumes that we can compare times; true if they are stored as UNIX timestamps
-    @Query("SELECT screenID FROM Screen WHERE startTime < (SELECT startDate FROM Sleep WHERE sleepID" +
-            " = :slpID" + ") AND startTime > s.endTime")
-    static public int[] getCorrespondingScreenSessions(int slpID);
+    //@Query("SELECT screenID FROM Screen WHERE startTime < (SELECT startTime FROM Sleep WHERE sleepID" +
+           // " = :slpID" + ") AND startTime > s.endTime")
+    //public int[] getCorrespondingScreenSessions(int slpID);
 }
