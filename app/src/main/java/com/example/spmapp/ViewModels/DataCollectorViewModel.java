@@ -11,6 +11,7 @@ import com.example.spmapp.Helpers.Constants;
 import com.example.spmapp.Helpers.General;
 import com.example.spmapp.MainDatabase;
 import com.example.spmapp.ScreenDao;
+import com.example.spmapp.Sleep;
 import com.example.spmapp.SleepDao;
 
 public class DataCollectorViewModel extends AndroidViewModel {
@@ -30,7 +31,7 @@ public class DataCollectorViewModel extends AndroidViewModel {
 
     //log in DB
     public void recordSleepPeriod(Long startTime, Long endTime) {
-//        sleepDao.insertSleep(Sleep(startTime, endTime));
+        sleepDao.insertSleep(new Sleep(startTime, endTime, 5));
     }
 
     public void recordScreenPeriod(Long startTime, Long endTime) {
