@@ -9,11 +9,11 @@ import androidx.room.TypeConverters;
 @Database(version = 1, entities = {Sleep.class, Screen.class})
 @TypeConverters(DateConverter.class)
 public abstract class MainDatabase extends RoomDatabase {
-
+    //SQLite file
     private static final String DB_NAME = "main_db";
-
+    //is a singleton
     private static MainDatabase instance;
-
+    //getting the one single instance of the DB
     public static synchronized MainDatabase getDB(Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(), MainDatabase.class, DB_NAME).build();
