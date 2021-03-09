@@ -10,6 +10,7 @@ import androidx.lifecycle.AndroidViewModel;
 import com.example.spmapp.Helpers.Constants;
 import com.example.spmapp.Helpers.General;
 import com.example.spmapp.MainDatabase;
+import com.example.spmapp.Screen;
 import com.example.spmapp.ScreenDao;
 import com.example.spmapp.Sleep;
 import com.example.spmapp.SleepDao;
@@ -35,7 +36,7 @@ public class DataCollectorViewModel extends AndroidViewModel {
     }
 
     public void recordScreenPeriod(Long startTime, Long endTime) {
-//        screenDao.insertScreen(Screen(startTime, endTime, rating));
+        screenDao.insertScreen(new Screen(startTime, endTime));
     }
 
     //remember the timestamp when sleep/screen manual timer is started
@@ -63,5 +64,4 @@ public class DataCollectorViewModel extends AndroidViewModel {
     public Long getTimerStart() {
         return timerPrefs.getLong(Constants.TIMER_START_KEY, 0);
     }
-
 }
