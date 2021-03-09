@@ -9,27 +9,32 @@ import androidx.lifecycle.AndroidViewModel;
 
 import com.example.spmapp.Helpers.Constants;
 import com.example.spmapp.Helpers.General;
+import com.example.spmapp.MainDatabase;
+import com.example.spmapp.ScreenDao;
+import com.example.spmapp.SleepDao;
 
 public class DataCollectorViewModel extends AndroidViewModel {
 
     //used to save timer start
     SharedPreferences timerPrefs;
 
-//    SleepRepository
-//    ScreenTimeRepository
+    SleepDao sleepDao;
+    ScreenDao screenDao;
 
     public DataCollectorViewModel(@NonNull Application application, Context context) {
         super(application);
         this.timerPrefs = context.getSharedPreferences(Constants.TIMER_PREFS_KEY, Context.MODE_PRIVATE);
+        this.sleepDao = MainDatabase.getDB(application).sleepDao();
+        this.screenDao = MainDatabase.getDB(application).screenDao();
     }
 
     //log in DB
     public void recordSleepPeriod(Long startTime, Long endTime) {
-//        sleepRepository.insert(startTime, endTime)
+//        sleepDao.
     }
 
     public void recordScreenPeriod(Long startTime, Long endTime) {
-//        screenTimeRepository.insert(startTime, endTime)
+//        screenDao.
     }
 
     //remember the timestamp when sleep/screen manual timer is started
