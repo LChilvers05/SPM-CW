@@ -10,11 +10,11 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Entity//(primaryKeys = {"startDate", "startTime"})
+@Entity(primaryKeys = {"startTime", "endTime"})
 @TypeConverters(DateConverter.class)
 public class Sleep {
-    @PrimaryKey(autoGenerate = true)
-    public final int sleepID = 0;
+//    @PrimaryKey(autoGenerate = true)
+//    public final int sleepID = 0;
     // does it really make sense to set this annotation if these values will be retrieved
     // automatically by the program? they cannot be null anyway
     @NonNull

@@ -10,13 +10,13 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Entity//(primaryKeys = {"startDate", "startTime"})
+@Entity(primaryKeys = {"startTime", "endTime"})
 @TypeConverters(DateConverter.class)
 public class Screen {
     // since these records are referenced in the ScreenSleepMap, there should probably be a
     // new simple primary key so that it is easier to reference
-    @PrimaryKey(autoGenerate = true)
-    public final int screenID = 0;
+//    @PrimaryKey(autoGenerate = true)
+//    public final int screenID = 0;
     @NonNull
     public final long startTime;
     @NonNull

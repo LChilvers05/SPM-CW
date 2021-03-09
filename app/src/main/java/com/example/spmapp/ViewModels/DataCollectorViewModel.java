@@ -32,11 +32,19 @@ public class DataCollectorViewModel extends AndroidViewModel {
 
     //log in DB
     public void recordSleepPeriod(Long startTime, Long endTime) {
-        sleepDao.insertSleep(new Sleep(startTime, endTime, 5));
+        new Thread() {
+            public void run() {
+                sleepDao.insertSleep(new Sleep(startTime, endTime, 5));
+            }
+        }.start();
     }
 
     public void recordScreenPeriod(Long startTime, Long endTime) {
-        screenDao.insertScreen(new Screen(startTime, endTime));
+        new Thread() {
+            public void run() {
+                screenDao.insertScreen(new Screen(startTime, endTime));
+            }
+        }.start();
     }
 
     //remember the timestamp when sleep/screen manual timer is started
