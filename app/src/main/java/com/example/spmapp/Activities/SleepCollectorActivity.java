@@ -1,10 +1,13 @@
 package com.example.spmapp.Activities;
 
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +19,8 @@ import com.example.spmapp.ViewModels.DataCollectorViewModel;
 import java.lang.ref.WeakReference;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.sql.Time;
+import java.util.Calendar;
 
 public class SleepCollectorActivity extends AppCompatActivity {
 
@@ -28,11 +33,65 @@ public class SleepCollectorActivity extends AppCompatActivity {
     TextView timerValueTextView;
 
 
-    @Override
+
+
+
+        EditText startTimeEditTxt;
+        EditText endTimeEditTxt;
+
+        TimePickerDialog startTimePicker;
+        TimePickerDialog endTimePicker;
+
+        @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sleep_collection);
-        timerValueTextView = findViewById(R.id.timerValueTextView);
+
+        startTimeEditTxt = (EditText)findViewById(R.id.startTimeEntry);
+        startTimeEditTxt.setInputType(0);
+        endTimeEditTxt = (EditText)findViewById(R.id.endTimeEntry);
+        endTimeEditTxt.setInputType(0);
+
+        startTimeEditTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startTimePicker = new TimePickerDialog(com.example.spmapp.Activities.SleepCollectorActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker startTimePicker, int selectedHours, int selectedMinutes) {
+                        String startTimeString;
+                        if(selectedMinutes<10){
+                            startTimeString = selectedHours + ":0" + selectedMinutes;
+                        }else{
+                            startTimeString = selectedHours + ":" + selectedMinutes;
+                        }
+                        startTimeEditTxt.setText(startTimeString);
+                    }
+                }, 0, 0, true);
+                startTimePicker.show();
+            }
+
+        });
+
+        endTimeEditTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                endTimePicker = new TimePickerDialog(com.example.spmapp.Activities.SleepCollectorActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker endTimePicker, int selectedHours, int selectedMinutes) {
+                        String endTimeString;
+                        if(selectedMinutes<10){
+                            endTimeString = selectedHours + ":0" + selectedMinutes;
+                        }else{
+                            endTimeString = selectedHours + ":" + selectedMinutes;
+                        }
+
+                        endTimeEditTxt.setText(endTimeString);
+                    }
+                }, 0, 0, true);
+                endTimePicker.show();
+            }
+
+        });
     }
 
     @Override
