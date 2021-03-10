@@ -55,11 +55,11 @@ public class DataCollectorViewModel extends AndroidViewModel {
     }
 
     //update database with timestamps when sleep/screen manual timer is stopped
-    public void endTimer(Boolean isSleepMode) {
+    public void endTimer(Boolean forSleep) {
         Long startTime = getTimerStart();
         if (startTime != 0) {
             Long endTime = General.getUnixTime();
-            if (isSleepMode) {
+            if (forSleep) {
                 recordSleepPeriod(startTime, endTime);
             } else {
                 recordScreenPeriod(startTime, endTime);
@@ -70,6 +70,6 @@ public class DataCollectorViewModel extends AndroidViewModel {
     }
 
     public Long getTimerStart() {
-        return timerPrefs.getLong(Constants.TIMER_START_KEY, 0);
+        return timerPrefs.getLong(Constants.TIMER_START_KEY, 0L);
     }
 }
