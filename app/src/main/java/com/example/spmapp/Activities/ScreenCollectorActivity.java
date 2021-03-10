@@ -7,11 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.spmapp.R;
 
-public class DataCollectorActivity extends AppCompatActivity {
+public class ScreenCollectorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sleep_collection);
+        setContentView(R.layout.activity_screentime_collection);
     }
 
     public void BackButtonPressed(View view){

@@ -15,7 +15,7 @@
         android:layout_marginTop="132dp"
         android:layout_marginEnd="79dp"
         android:gravity="center|center_horizontal"
-        android:text="@string/log_title"
+        android:text="Log sleep completed"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
@@ -93,6 +93,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/endTimerButton"
+        app:layout_constraintTop_toBottomOf="@+id/timerValueTextView"
         app:srcCompat="@android:drawable/ic_media_play" />
 
     <ImageButton
@@ -134,7 +135,7 @@
         android:layout_height="60dp"
         android:layout_marginStart="79dp"
         android:layout_marginEnd="79dp"
-        android:text="@string/timer_title"
+        android:text="Start timer before sleep"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
