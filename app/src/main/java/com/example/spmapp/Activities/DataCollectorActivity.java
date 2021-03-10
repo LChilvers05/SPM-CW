@@ -1,6 +1,7 @@
 package com.example.spmapp.Activities;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,4 +15,7 @@ public class DataCollectorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_data_collection);
     }
 
+    public void BackButtonPressed(View view){
+        finish();
+    }
 }
