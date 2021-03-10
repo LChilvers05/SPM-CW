@@ -19,12 +19,12 @@ public class LogPickerActivity extends AppCompatActivity {
     }
 
     public void logSleepTapped(View view) {
-        Intent dataCollection = new Intent(this, SleepCollectorActivity.class);
+        Intent dataCollection = new Intent(this, DataCollectorActivity.class);
         startActivity(dataCollection);
     }
 
     public void logScreenTimeTapped(View view) {
-        Intent dataCollection = new Intent(this, ScreenCollectorActivity.class);
+        Intent dataCollection = new Intent(this, DataCollectorActivity.class);
         startActivity(dataCollection);
     }
 }

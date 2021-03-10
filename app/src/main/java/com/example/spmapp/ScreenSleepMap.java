@@ -1,6 +1,6 @@
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-/*
+
 @Entity(primaryKeys = {@ForeignKey(entity = ScreenSleepMap.class,
                         parentColumns = "sleep", childColumns = "sleepID",
                         onDelete = ForeignKey.CASCADE), @ForeignKey(entity = ScreenSleepMap.class,
@@ -23,4 +23,3 @@ public class ScreenSleepMap {
 }
 // still need to define a map from screen sessions to sleep sessions;
 // possibly a many-to-many map, because of naps during the day
- */
