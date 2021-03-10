@@ -31,22 +31,16 @@ public class SleepCollectorActivity extends AppCompatActivity {
     Double timerValue = 0.0;
 
     TextView timerValueTextView;
+    EditText startTimeEditTxt;
+    EditText endTimeEditTxt;
 
-
-
-
-
-        EditText startTimeEditTxt;
-        EditText endTimeEditTxt;
-
-        TimePickerDialog startTimePicker;
-        TimePickerDialog endTimePicker;
-
-        @Override
+    TimePickerDialog startTimePicker;
+    TimePickerDialog endTimePicker;
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sleep_collection);
-
+        timerValueTextView = findViewById(R.id.timerValueTextView);
         startTimeEditTxt = (EditText)findViewById(R.id.startTimeEntry);
         startTimeEditTxt.setInputType(0);
         endTimeEditTxt = (EditText)findViewById(R.id.endTimeEntry);
