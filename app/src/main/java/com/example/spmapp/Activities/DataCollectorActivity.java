@@ -7,6 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.spmapp.Helpers.General;
 import com.example.spmapp.ViewModels.DataCollectorViewModel;
 
+/**
+ * Parent class of ScreenCollectorActivity and SleepCollectorActivity
+ */
 public abstract class DataCollectorActivity extends AppCompatActivity {
 
     DataCollectorViewModel viewModel;

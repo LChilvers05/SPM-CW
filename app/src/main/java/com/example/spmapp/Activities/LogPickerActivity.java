@@ -9,6 +9,10 @@ import android.view.View;
 
 import com.example.spmapp.R;
 
+/**
+ * Present two directions for navigation
+ * Log Sleep or Log Screen Time
+ */
 public class LogPickerActivity extends AppCompatActivity {
 
     @Override

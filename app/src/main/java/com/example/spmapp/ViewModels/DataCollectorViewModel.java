@@ -15,6 +15,9 @@ import com.example.spmapp.Database.ScreenDao;
 import com.example.spmapp.Models.Sleep;
 import com.example.spmapp.Database.SleepDao;
 
+/**
+ * For DataCollectorActivity subclasses to communicate with MainDatabase
+ */
 public class DataCollectorViewModel extends AndroidViewModel {
 
     //used to save timer start
@@ -75,7 +78,7 @@ public class DataCollectorViewModel extends AndroidViewModel {
     public Long getTimerStart() {
         return timerPrefs.getLong(getKey(), 0L);
     }
-
+    //so timer for sleep is separated from screen
     private String getKey() {
         if (forSleep) { return Constants.SLEEP_TIMER_START_KEY; }
         return Constants.SCREEN_TIMER_START_KEY;
