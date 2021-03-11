@@ -9,11 +9,11 @@ import androidx.lifecycle.AndroidViewModel;
 
 import com.example.spmapp.Helpers.Constants;
 import com.example.spmapp.Helpers.General;
-import com.example.spmapp.MainDatabase;
-import com.example.spmapp.Screen;
-import com.example.spmapp.ScreenDao;
-import com.example.spmapp.Sleep;
-import com.example.spmapp.SleepDao;
+import com.example.spmapp.Database.MainDatabase;
+import com.example.spmapp.Models.Screen;
+import com.example.spmapp.Database.ScreenDao;
+import com.example.spmapp.Models.Sleep;
+import com.example.spmapp.Database.SleepDao;
 
 public class DataCollectorViewModel extends AndroidViewModel {
 

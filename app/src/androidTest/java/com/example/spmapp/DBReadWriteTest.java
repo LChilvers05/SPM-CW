@@ -5,7 +5,12 @@ import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.example.spmapp.Database.MainDatabase;
+import com.example.spmapp.Database.ScreenDao;
+import com.example.spmapp.Database.SleepDao;
 import com.example.spmapp.Helpers.General;
+import com.example.spmapp.Models.Screen;
+import com.example.spmapp.Models.Sleep;
 
 import org.junit.After;
 import org.junit.Before;

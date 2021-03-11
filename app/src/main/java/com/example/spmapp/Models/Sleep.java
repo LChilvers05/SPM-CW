@@ -1,9 +1,11 @@
-package com.example.spmapp;
+package com.example.spmapp.Models;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
+
+import com.example.spmapp.DateConverter;
 
 import java.sql.Date;
 import java.sql.Time;

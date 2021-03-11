@@ -1,10 +1,14 @@
-package com.example.spmapp;
+package com.example.spmapp.Database;
 
 import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
+
+import com.example.spmapp.DateConverter;
+import com.example.spmapp.Models.Screen;
+import com.example.spmapp.Models.Sleep;
 
 @Database(version = 1, entities = {Sleep.class, Screen.class})
 @TypeConverters(DateConverter.class)
