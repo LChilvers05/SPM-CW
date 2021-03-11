@@ -11,7 +11,7 @@
         android:theme="@style/Theme.SPMApp">
 
         <activity android:name=".Activities.LogPickerActivity"
-            android:theme="@style/Theme.AppCompat.Dialog"/>
+            android:theme="@style/ActivityDialogTheme"/>
 
         <activity android:name=".Activities.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar">

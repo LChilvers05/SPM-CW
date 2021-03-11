@@ -23,11 +23,14 @@ public class DataCollectorViewModel extends AndroidViewModel {
     SleepDao sleepDao;
     ScreenDao screenDao;
 
-    public DataCollectorViewModel(@NonNull Application application, Context context) {
+    Boolean forSleep;
+
+    public DataCollectorViewModel(@NonNull Application application, Context context, Boolean forSleep) {
         super(application);
         this.timerPrefs = context.getSharedPreferences(Constants.TIMER_PREFS_KEY, Context.MODE_PRIVATE);
         this.sleepDao = MainDatabase.getDB(application).sleepDao();
         this.screenDao = MainDatabase.getDB(application).screenDao();
+        this.forSleep = forSleep;
     }
 
     //log in DB
@@ -50,7 +53,7 @@ public class DataCollectorViewModel extends AndroidViewModel {
     //remember the timestamp when sleep/screen manual timer is started
     public void startTimer() {
         SharedPreferences.Editor prefsEditor = timerPrefs.edit();
-        prefsEditor.putLong(Constants.TIMER_START_KEY, General.getUnixTime());
+        prefsEditor.putLong(getKey(), General.getUnixTime());
         prefsEditor.apply();
     }
 
@@ -65,11 +68,16 @@ public class DataCollectorViewModel extends AndroidViewModel {
                 recordScreenPeriod(startTime, endTime);
             }
             //reset as no timer running
-            timerPrefs.edit().remove(Constants.TIMER_START_KEY).apply();
+            timerPrefs.edit().remove(getKey()).apply();
         }
     }
 
     public Long getTimerStart() {
-        return timerPrefs.getLong(Constants.TIMER_START_KEY, 0L);
+        return timerPrefs.getLong(getKey(), 0L);
+    }
+
+    private String getKey() {
+        if (forSleep) { return Constants.SLEEP_TIMER_START_KEY; }
+        return Constants.SCREEN_TIMER_START_KEY;
     }
 }
