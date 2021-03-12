@@ -3,6 +3,7 @@ package com.example.spmapp.ViewModels;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -14,6 +15,12 @@ import com.example.spmapp.Models.Screen;
 import com.example.spmapp.Database.ScreenDao;
 import com.example.spmapp.Models.Sleep;
 import com.example.spmapp.Database.SleepDao;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * For DataCollectorActivity subclasses to communicate with MainDatabase
@@ -37,7 +44,7 @@ public class DataCollectorViewModel extends AndroidViewModel {
     }
 
     //log in DB
-    public void recordSleepPeriod(Long startTime, Long endTime) {
+    private void recordSleepPeriod(Long startTime, Long endTime) {
         new Thread() {
             public void run() {
                 sleepDao.insertSleep(new Sleep(startTime, endTime, 5));
@@ -45,12 +52,35 @@ public class DataCollectorViewModel extends AndroidViewModel {
         }.start();
     }
 
-    public void recordScreenPeriod(Long startTime, Long endTime) {
+    private void recordScreenPeriod(Long startTime, Long endTime) {
         new Thread() {
             public void run() {
                 screenDao.insertScreen(new Screen(startTime, endTime));
             }
         }.start();
+    }
+
+    //convert date and times to unix timestamp appropriate for DB
+    public void logSleep(String date, String startTime, String endTime) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/M/yyyy hh:mm", Locale.ENGLISH);
+        String startDateStr = date + " " + startTime;
+        String endDateStr = date + " " + endTime;
+        try {
+            long startTimestamp = General.getUnixTimeFromDate(formatter.parse(startDateStr));
+            long endTimestamp = General.getUnixTimeFromDate(formatter.parse(endDateStr));
+            //add a day if end time is less than start
+            if (endTimestamp < startTimestamp) {
+                endTimestamp = endTimestamp + 86400L;
+            }
+            recordSleepPeriod(startTimestamp, endTimestamp);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void logScreen(String date, String duration) {
+
     }
 
     //remember the timestamp when sleep/screen manual timer is started

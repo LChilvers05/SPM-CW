@@ -72,6 +72,9 @@ public class ScreenCollectorActivity extends DataCollectorActivity {
         });
     }
 
+    protected Boolean checkFields() {
+        return true;
+    }
 
     //timer start button
     public void startTimer(View view) {

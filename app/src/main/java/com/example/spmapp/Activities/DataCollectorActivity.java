@@ -1,6 +1,8 @@
 package com.example.spmapp.Activities;
 
 import android.os.Handler;
+import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +16,7 @@ public abstract class DataCollectorActivity extends AppCompatActivity {
 
     DataCollectorViewModel viewModel;
     //views
+    Button logButton;
     TextView timerDisplayTextView;
     ImageButton startTimerBtn;
     ImageButton endTimerBtn;
@@ -24,6 +27,8 @@ public abstract class DataCollectorActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        //set log button in initial state
+        setLogButton(checkFields());
         //set start/stop buttons initial state
         startTimerBtn.setEnabled(true);
         startTimerBtn.setAlpha(1.0F);
@@ -46,6 +51,17 @@ public abstract class DataCollectorActivity extends AppCompatActivity {
         //stop the timer when leaving activity
         timerHandler.removeCallbacks(UpdateTimerTask);
         timerStart = 0L;
+    }
+
+    abstract protected Boolean checkFields();
+
+    protected void setLogButton(Boolean enabled) {
+        logButton.setEnabled(enabled);
+        if (enabled) {
+            logButton.setAlpha(1.0F);
+        } else {
+            logButton.setAlpha(0.5F);
+        }
     }
 
     //enable and disable timer buttons

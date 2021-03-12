@@ -3,8 +3,9 @@ package com.example.spmapp.Activities;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.example.spmapp.R;
@@ -22,7 +23,6 @@ public class SleepCollectorActivity extends DataCollectorActivity {
     //Pickers
     TimePickerDialog startTimePicker;
     TimePickerDialog endTimePicker;
-    DatePickerDialog datePickerDialog;
     LocalDateTime localDateTime;
 
     @Override
@@ -30,6 +30,10 @@ public class SleepCollectorActivity extends DataCollectorActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sleep_collection);
         //grab views
+        startTimeEditTxt = findViewById(R.id.startTimeEntry);
+        endTimeEditTxt = findViewById(R.id.endTimeEntry);
+        dateEditTxt = findViewById(R.id.startDateEntry);
+        logButton = findViewById(R.id.logDataButton);
         timerDisplayTextView = findViewById(R.id.timerDisplayTextView);
 
         localDateTime = LocalDateTime.now();
@@ -44,23 +48,18 @@ public class SleepCollectorActivity extends DataCollectorActivity {
         launchDatePicker();
     }
 
-    public void launchDatePicker(){
+    private void launchDatePicker(){
         dateEditTxt = findViewById(R.id.startDateEntry);
         dateEditTxt.setInputType(0);
-
-        dateEditTxt.setOnClickListener(view -> {
-            new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener(){
-
-                @Override
-                public void onDateSet(DatePicker datePicker, int yearSelected, int monthSelected, int daySelected) {
-                    String dateSelected = daySelected + "/" + monthSelected + "/" + yearSelected;
-                    dateEditTxt.setText(dateSelected);
-                }
-            }, localDateTime.getYear(), localDateTime.getMonthValue(), localDateTime.getDayOfMonth()).show();
-        });
+        //for some reason, month is off by one, +/- 1 fixes
+        dateEditTxt.setOnClickListener(view -> new DatePickerDialog(this, (datePicker, yearSelected, monthSelected, daySelected) -> {
+            String dateSelected = daySelected + "/" + (monthSelected + 1) + "/" + yearSelected;
+            dateEditTxt.setText(dateSelected);
+            setLogButton(checkFields());
+        }, localDateTime.getYear(), localDateTime.getMonthValue() - 1, localDateTime.getDayOfMonth()).show());
     }
 
-    public void launchStartPicker(){
+    private void launchStartPicker(){
         //start time picker dialog and add selection to EditText view
         startTimeEditTxt = findViewById(R.id.startTimeEntry);
         startTimeEditTxt.setInputType(0);
@@ -74,12 +73,13 @@ public class SleepCollectorActivity extends DataCollectorActivity {
                     startTimeString = selectedHours + ":" + selectedMinutes;
                 }
                 startTimeEditTxt.setText(startTimeString);
+                setLogButton(checkFields());
             }, 0, 0, true);
             startTimePicker.show();
         });
     }
 
-    public void launchEndPicker(){
+    private void launchEndPicker(){
         //end time picker dialog and add selection to EditText view
         endTimeEditTxt = findViewById(R.id.endTimeEntry);
         endTimeEditTxt.setInputType(0);
@@ -94,9 +94,28 @@ public class SleepCollectorActivity extends DataCollectorActivity {
                 }
 
                 endTimeEditTxt.setText(endTimeString);
+                setLogButton(checkFields());
             }, localDateTime.getHour(), localDateTime.getMinute(), true);
             endTimePicker.show();
         });
+    }
+
+    //stops user from calling logSleep until all EditTexts filled
+    protected Boolean checkFields() {
+        if (TextUtils.isEmpty(endTimeEditTxt.getText().toString())) { return false; }
+        if (TextUtils.isEmpty(startTimeEditTxt.getText().toString())) { return false; }
+        return !(TextUtils.isEmpty(dateEditTxt.getText().toString()));
+    }
+
+    //view model does calculations to insert start and end time into DB
+    public void logSleep(View view) {
+        if (checkFields()) {
+            viewModel.logSleep(dateEditTxt.getText().toString(),
+                    startTimeEditTxt.getText().toString(),
+                    endTimeEditTxt.getText().toString());
+        } else {
+            Toast.makeText(this, "An Error Occurred", Toast.LENGTH_SHORT).show();
+        }
     }
 
     //timer start button
