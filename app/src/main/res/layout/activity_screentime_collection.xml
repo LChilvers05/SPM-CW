@@ -26,6 +26,7 @@
 
     <Button
         android:id="@+id/logDataButton"
+        android:onClick="logScreen"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginTop="61dp"

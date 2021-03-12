@@ -35,11 +35,10 @@ public class SleepCollectorActivity extends DataCollectorActivity {
         dateEditTxt = findViewById(R.id.startDateEntry);
         logButton = findViewById(R.id.logDataButton);
         timerDisplayTextView = findViewById(R.id.timerDisplayTextView);
-
-        localDateTime = LocalDateTime.now();
-
         startTimerBtn = findViewById(R.id.startTimerButton);
         endTimerBtn = findViewById(R.id.endTimerButton);
+
+        localDateTime = LocalDateTime.now();
 
         viewModel = new DataCollectorViewModel(getApplication(), this, true);
 
@@ -113,9 +112,13 @@ public class SleepCollectorActivity extends DataCollectorActivity {
             viewModel.logSleep(dateEditTxt.getText().toString(),
                     startTimeEditTxt.getText().toString(),
                     endTimeEditTxt.getText().toString());
+            Toast.makeText(this, "Sleep Recorded", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "An Error Occurred", Toast.LENGTH_SHORT).show();
         }
+        dateEditTxt.getText().clear();
+        startTimeEditTxt.getText().clear();
+        endTimeEditTxt.getText().clear();
     }
 
     //timer start button

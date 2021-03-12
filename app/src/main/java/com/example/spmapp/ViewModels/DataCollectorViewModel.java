@@ -80,7 +80,15 @@ public class DataCollectorViewModel extends AndroidViewModel {
     }
 
     public void logScreen(String date, String duration) {
-
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/M/yyyy", Locale.ENGLISH);
+        try {
+            long startTimestamp = General.getUnixTimeFromDate(formatter.parse(date));
+            String[] splitDuration = duration.split(":");
+            long endTimestamp = startTimestamp + 60L*60L*Long.parseLong(splitDuration[0]) + 60L*Long.parseLong(splitDuration[1]);
+            recordScreenPeriod(startTimestamp, endTimestamp);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     //remember the timestamp when sleep/screen manual timer is started
