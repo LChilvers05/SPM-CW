@@ -33,6 +33,7 @@
         android:layout_marginBottom="62dp"
         android:backgroundTint="@color/purple_500"
         android:text="@string/log_btn_text"
+        android:textColor="#ffffff"
         app:layout_constraintBottom_toTopOf="@+id/startTimerTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/startTimeEntry"
@@ -68,11 +69,12 @@
         android:layout_marginBottom="135dp"
         android:backgroundTint="#FF9800"
         android:contentDescription="Start timer"
+        android:onClick="startTimer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/endTimerButton"
-        app:layout_constraintTop_toBottomOf="@+id/timerValueTextView"
-        app:srcCompat="@android:drawable/ic_media_play" />
+        app:layout_constraintTop_toBottomOf="@+id/timerDisplayTextView"
+        app:srcCompat="@drawable/start_timer_icon" />
 
     <ImageButton
         android:id="@+id/endTimerButton"
@@ -82,23 +84,24 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="27dp"
         android:layout_marginBottom="135dp"
-        android:backgroundTint="#90FF9800"
+        android:backgroundTint="#FF9800"
         android:contentDescription="Stop timer"
+        android:onClick="endTimer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/startTimerButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timerValueTextView"
-        app:srcCompat="@android:drawable/ic_media_pause" />
+        app:layout_constraintTop_toBottomOf="@+id/timerDisplayTextView"
+        app:srcCompat="@drawable/stop_timer_icon" />
 
     <TextView
-        android:id="@+id/timerValueTextView"
+        android:id="@+id/timerDisplayTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="111dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="111dp"
         android:layout_marginBottom="10dp"
-        android:text="00:00"
+        android:text="00:00:00"
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
         android:textSize="75sp"
@@ -118,7 +121,7 @@
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/timerValueTextView"
+        app:layout_constraintBottom_toTopOf="@+id/timerDisplayTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

@@ -11,7 +11,7 @@
         android:theme="@style/Theme.SPMApp">
 
         <activity android:name=".Activities.LogPickerActivity"
-            android:theme="@style/Theme.AppCompat.Dialog"/>
+            android:theme="@style/ActivityDialogTheme"/>
 
         <activity android:name=".Activities.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -19,10 +19,6 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <activity android:name=".Activities.DataCollectorActivity"
-            android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <activity android:name=".Activities.ScreenCollectorActivity"

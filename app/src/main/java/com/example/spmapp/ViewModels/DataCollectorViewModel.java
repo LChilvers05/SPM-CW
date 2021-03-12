@@ -9,12 +9,15 @@ import androidx.lifecycle.AndroidViewModel;
 
 import com.example.spmapp.Helpers.Constants;
 import com.example.spmapp.Helpers.General;
-import com.example.spmapp.MainDatabase;
-import com.example.spmapp.Screen;
-import com.example.spmapp.ScreenDao;
-import com.example.spmapp.Sleep;
-import com.example.spmapp.SleepDao;
+import com.example.spmapp.Database.MainDatabase;
+import com.example.spmapp.Models.Screen;
+import com.example.spmapp.Database.ScreenDao;
+import com.example.spmapp.Models.Sleep;
+import com.example.spmapp.Database.SleepDao;
 
+/**
+ * For DataCollectorActivity subclasses to communicate with MainDatabase
+ */
 public class DataCollectorViewModel extends AndroidViewModel {
 
     //used to save timer start
@@ -23,11 +26,14 @@ public class DataCollectorViewModel extends AndroidViewModel {
     SleepDao sleepDao;
     ScreenDao screenDao;
 
-    public DataCollectorViewModel(@NonNull Application application, Context context) {
+    Boolean forSleep;
+
+    public DataCollectorViewModel(@NonNull Application application, Context context, Boolean forSleep) {
         super(application);
         this.timerPrefs = context.getSharedPreferences(Constants.TIMER_PREFS_KEY, Context.MODE_PRIVATE);
         this.sleepDao = MainDatabase.getDB(application).sleepDao();
         this.screenDao = MainDatabase.getDB(application).screenDao();
+        this.forSleep = forSleep;
     }
 
     //log in DB
@@ -50,14 +56,14 @@ public class DataCollectorViewModel extends AndroidViewModel {
     //remember the timestamp when sleep/screen manual timer is started
     public void startTimer() {
         SharedPreferences.Editor prefsEditor = timerPrefs.edit();
-        prefsEditor.putLong(Constants.TIMER_START_KEY, General.getUnixTime());
+        prefsEditor.putLong(getKey(), General.getUnixTime());
         prefsEditor.apply();
     }
 
     //update database with timestamps when sleep/screen manual timer is stopped
     public void endTimer(Boolean forSleep) {
         Long startTime = getTimerStart();
-        if (startTime != 0) {
+        if (startTime != 0L) {
             Long endTime = General.getUnixTime();
             if (forSleep) {
                 recordSleepPeriod(startTime, endTime);
@@ -65,11 +71,16 @@ public class DataCollectorViewModel extends AndroidViewModel {
                 recordScreenPeriod(startTime, endTime);
             }
             //reset as no timer running
-            timerPrefs.edit().remove(Constants.TIMER_START_KEY).apply();
+            timerPrefs.edit().remove(getKey()).apply();
         }
     }
 
     public Long getTimerStart() {
-        return timerPrefs.getLong(Constants.TIMER_START_KEY, 0L);
+        return timerPrefs.getLong(getKey(), 0L);
+    }
+    //so timer for sleep is separated from screen
+    private String getKey() {
+        if (forSleep) { return Constants.SLEEP_TIMER_START_KEY; }
+        return Constants.SCREEN_TIMER_START_KEY;
     }
 }

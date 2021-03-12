@@ -1,4 +1,4 @@
-package com.example.spmapp;
+package com.example.spmapp.Database;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -7,10 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import com.example.spmapp.Models.Screen;
 
 @Dao
 public interface ScreenDao {
