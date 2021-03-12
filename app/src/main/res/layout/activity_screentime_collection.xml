@@ -28,9 +28,9 @@
         android:id="@+id/logDataButton"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="61dp"
         android:layout_marginEnd="79dp"
-        android:layout_marginBottom="62dp"
+        android:layout_marginBottom="61dp"
         android:backgroundTint="@color/purple_500"
         android:text="@string/log_btn_text"
         android:textColor="#ffffff"
@@ -42,11 +42,11 @@
     <EditText
         android:id="@+id/startTimeEntry"
         android:layout_width="150dp"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_marginStart="79dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="15dp"
-        android:layout_marginBottom="61dp"
+        android:layout_marginBottom="5dp"
         android:background="#3F51B5"
         android:backgroundTint="#030A32"
         android:ems="10"
@@ -56,10 +56,31 @@
         android:textAlignment="center"
         android:textColor="#FDFCFC"
         android:textColorHint="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/startTimerTextView"
+        app:layout_constraintBottom_toTopOf="@+id/sessionDateEntry"
         app:layout_constraintEnd_toStartOf="@+id/logDataButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
+
+    <EditText
+        android:id="@+id/sessionDateEntry"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="79dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="42dp"
+        android:background="#3F51B5"
+        android:backgroundTint="#030A32"
+        android:ems="10"
+        android:hint="Session date"
+        android:inputType="date"
+        android:padding="10dp"
+        android:textAlignment="center"
+        android:textColor="#FDFCFC"
+        android:textColorHint="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/startTimerTextView"
+        app:layout_constraintEnd_toStartOf="@+id/logDataButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/startTimeEntry" />
 
     <ImageButton
         android:id="@+id/startTimerButton"
@@ -125,7 +146,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/startTimeEntry" />
+        app:layout_constraintTop_toBottomOf="@+id/sessionDateEntry" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/backButton"
