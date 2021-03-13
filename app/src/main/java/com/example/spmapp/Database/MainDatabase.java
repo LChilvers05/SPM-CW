@@ -20,7 +20,7 @@ public abstract class MainDatabase extends RoomDatabase {
     //getting the one single instance of the DB
     public static synchronized MainDatabase getDB(Context context) {
         if (instance == null) {
-            instance = Room.databaseBuilder(context.getApplicationContext(), MainDatabase.class, DB_NAME).build();
+            instance = Room.databaseBuilder(context.getApplicationContext(), MainDatabase.class, DB_NAME).allowMainThreadQueries().build();
         }
         return instance;
     }

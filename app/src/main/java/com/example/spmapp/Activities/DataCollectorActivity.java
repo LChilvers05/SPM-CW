@@ -14,7 +14,7 @@ import com.example.spmapp.ViewModels.DataCollectorViewModel;
  */
 public abstract class DataCollectorActivity extends AppCompatActivity {
 
-    DataCollectorViewModel viewModel;
+    public DataCollectorViewModel viewModel;
     //views
     Button logButton;
     TextView timerDisplayTextView;

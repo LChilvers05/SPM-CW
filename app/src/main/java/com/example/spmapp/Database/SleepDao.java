@@ -24,4 +24,8 @@ public interface SleepDao {
     public int sleepDateInfo(long sTime);
     @Query("SELECT * FROM Sleep")
     public Sleep[] getAllSleeps();
+
+    //tmp: used for JUnit tests
+    @Query("SELECT * FROM Sleep WHERE startTime = :sTime AND endTime = :eTime")
+    Sleep[] getSpecificSleep(long sTime, long eTime);
 }

@@ -18,8 +18,6 @@ import com.example.spmapp.Database.SleepDao;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -44,20 +42,12 @@ public class DataCollectorViewModel extends AndroidViewModel {
     }
 
     //log in DB
-    private void recordSleepPeriod(Long startTime, Long endTime) {
-        new Thread() {
-            public void run() {
-                sleepDao.insertSleep(new Sleep(startTime, endTime, 5));
-            }
-        }.start();
+    private void recordSleepPeriod(long startTime, long endTime) {
+        new Thread(() -> sleepDao.insertSleep(new Sleep(startTime, endTime, 5))).start();
     }
 
-    private void recordScreenPeriod(Long startTime, Long endTime) {
-        new Thread() {
-            public void run() {
-                screenDao.insertScreen(new Screen(startTime, endTime));
-            }
-        }.start();
+    private void recordScreenPeriod(long startTime, long endTime) {
+        new Thread(() -> screenDao.insertScreen(new Screen(startTime, endTime))).start();
     }
 
     //convert date and times to unix timestamp appropriate for DB
@@ -100,9 +90,9 @@ public class DataCollectorViewModel extends AndroidViewModel {
 
     //update database with timestamps when sleep/screen manual timer is stopped
     public void endTimer(Boolean forSleep) {
-        Long startTime = getTimerStart();
+        long startTime = getTimerStart();
         if (startTime != 0L) {
-            Long endTime = General.getUnixTime();
+            long endTime = General.getUnixTime();
             if (forSleep) {
                 recordSleepPeriod(startTime, endTime);
             } else {
@@ -113,7 +103,7 @@ public class DataCollectorViewModel extends AndroidViewModel {
         }
     }
 
-    public Long getTimerStart() {
+    public long getTimerStart() {
         return timerPrefs.getLong(getKey(), 0L);
     }
     //so timer for sleep is separated from screen
