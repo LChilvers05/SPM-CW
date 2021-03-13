@@ -39,7 +39,6 @@ dependencies {
     testImplementation 'org.hamcrest:hamcrest:2.2'
     def room_version = "2.2.6"
 
-
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
 }
