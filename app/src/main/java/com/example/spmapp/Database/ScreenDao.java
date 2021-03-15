@@ -30,4 +30,7 @@ public interface ScreenDao {
     //@Query("SELECT screenID FROM Screen WHERE startTime < (SELECT startTime FROM Sleep WHERE sleepID" +
            // " = :slpID" + ") AND startTime > s.endTime")
     //public int[] getCorrespondingScreenSessions(int slpID);
+    //tmp: used for JUnit tests
+    @Query("SELECT * FROM Screen WHERE startTime = :sTime AND endTime = :eTime")
+    Screen[] getSpecificScreen(long sTime, long eTime);
 }
