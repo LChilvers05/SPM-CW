@@ -73,18 +73,18 @@ public class SleepCollectorActivityTest {
     }
 
     //TODO: Test Doesn't Work Because Timer Thread Interferes With Auto-Clicking Stop Button
-    @Test
-    public void testTimer() {
-        //INPUT - start and stop the timer lasting 5 seconds
-        onView(withId(R.id.startTimerButton)).perform(click());
-        long startTimestamp = General.getUnixTime();
-        onView(withId(R.id.endTimerButton)).perform(click());
-        long endTimestamp = General.getUnixTime();
-
-        Sleep[] sleeps = sleepDao.getSpecificSleep(startTimestamp, endTimestamp);
-        Sleep sleep = sleeps[0];
-
-        assertThat(sleep.startTime, equalTo(startTimestamp));
-        assertThat(sleep.endTime, equalTo(endTimestamp));
-    }
+//    @Test
+//    public void testTimer() {
+//        //INPUT - start and stop the timer lasting 5 seconds
+//        onView(withId(R.id.startTimerButton)).perform(click());
+//        long startTimestamp = General.getUnixTime();
+//        onView(withId(R.id.endTimerButton)).perform(click());
+//        long endTimestamp = General.getUnixTime();
+//
+//        Sleep[] sleeps = sleepDao.getSpecificSleep(startTimestamp, endTimestamp);
+//        Sleep sleep = sleeps[0];
+//
+//        assertThat(sleep.startTime, equalTo(startTimestamp));
+//        assertThat(sleep.endTime, equalTo(endTimestamp));
+//    }
 }
