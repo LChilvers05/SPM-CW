@@ -15,6 +15,7 @@ import com.example.spmapp.Models.Screen;
 import com.example.spmapp.Database.ScreenDao;
 import com.example.spmapp.Models.Sleep;
 import com.example.spmapp.Database.SleepDao;
+import com.example.spmapp.Services.DataService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,27 +28,12 @@ public class DataCollectorViewModel extends AndroidViewModel {
 
     //used to save timer start
     SharedPreferences timerPrefs;
-
-    SleepDao sleepDao;
-    ScreenDao screenDao;
-
     Boolean forSleep;
 
     public DataCollectorViewModel(@NonNull Application application, Context context, Boolean forSleep) {
         super(application);
         this.timerPrefs = context.getSharedPreferences(Constants.TIMER_PREFS_KEY, Context.MODE_PRIVATE);
-        this.sleepDao = MainDatabase.getDB(application).sleepDao();
-        this.screenDao = MainDatabase.getDB(application).screenDao();
         this.forSleep = forSleep;
-    }
-
-    //log in DB
-    private void recordSleepPeriod(long startTime, long endTime) {
-        new Thread(() -> sleepDao.insertSleep(new Sleep(startTime, endTime, 5))).start();
-    }
-
-    private void recordScreenPeriod(long startTime, long endTime) {
-        new Thread(() -> screenDao.insertScreen(new Screen(startTime, endTime))).start();
     }
 
     //convert date and times to unix timestamp appropriate for DB
@@ -62,8 +48,7 @@ public class DataCollectorViewModel extends AndroidViewModel {
             if (endTimestamp < startTimestamp) {
                 endTimestamp = endTimestamp + 86400L;
             }
-            recordSleepPeriod(startTimestamp, endTimestamp);
-
+            DataService.shared().recordSleepPeriod(startTimestamp, endTimestamp, 5);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -75,7 +60,7 @@ public class DataCollectorViewModel extends AndroidViewModel {
             long startTimestamp = General.getUnixTimeFromDate(formatter.parse(date));
             String[] splitDuration = duration.split(":");
             long endTimestamp = startTimestamp + 60L*60L*Long.parseLong(splitDuration[0]) + 60L*Long.parseLong(splitDuration[1]);
-            recordScreenPeriod(startTimestamp, endTimestamp);
+            DataService.shared().recordScreenPeriod(startTimestamp, endTimestamp);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -94,9 +79,9 @@ public class DataCollectorViewModel extends AndroidViewModel {
         if (startTime != 0L) {
             long endTime = General.getUnixTime();
             if (forSleep) {
-                recordSleepPeriod(startTime, endTime);
+                DataService.shared().recordSleepPeriod(startTime, endTime, 5);
             } else {
-                recordScreenPeriod(startTime, endTime);
+                DataService.shared().recordScreenPeriod(startTime, endTime);
             }
             //reset as no timer running
             timerPrefs.edit().remove(getKey()).apply();
