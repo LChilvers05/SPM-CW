@@ -17,7 +17,6 @@ import com.example.spmapp.Database.SleepDao;
 import com.example.spmapp.Models.Screen;
 import com.example.spmapp.Models.Sleep;
 
-import java.util.Calendar;
 import java.util.Map;
 
 import static android.app.AppOpsManager.MODE_ALLOWED;
@@ -32,6 +31,8 @@ public class DataService {
 
     private final SleepDao sleepDao;
     private final ScreenDao screenDao;
+
+    private final int HOUR = 3600;
 
     private DataService(Application application) {
         this.sleepDao = MainDatabase.getDB(application).sleepDao();
@@ -73,27 +74,43 @@ public class DataService {
     //fetch
     //TODO: getLastTimestamp() is an important attribute
     @RequiresApi(api = Build.VERSION_CODES.Q)
-    public void getUsageStatistics(Context context, long startTime, long endTime) {
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, -1);
-        long start = calendar.getTimeInMillis();
-        long end = System.currentTimeMillis();
-
+    public Map<String, UsageStats> getUsageStatistics(Context context, long startTime, long endTime) {
         if (checkForUsageStatsPermission(context)) {
             UsageStatsManager usageStatsManager
                     = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
-            Map<String, UsageStats> stats = usageStatsManager.queryAndAggregateUsageStats(start, end);
+            Map<String, UsageStats> stats
+                    = usageStatsManager.queryAndAggregateUsageStats(startTime, endTime);
+            //TODO: filter the stats to things the user cares about
             //print out the stats
-            stats.entrySet().forEach(entry->{
-                System.out.println(entry.getValue().getPackageName() + " " + entry.getValue().getLastTimeVisible());
-            });
+//            stats.entrySet().forEach(entry->{
+//                System.out.println(entry.getValue().getPackageName() + " " + entry.getValue().getLastTimeVisible());
+//            });
+            return stats;
         } else {
             context.startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
         }
+        return null;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    public Float getScreenTimeClosestToSleep(Context context, long sleepStart) {
+        Screen[] manualScreens
+                = screenDao.getScreenWithEndBetween(sleepStart - 4*HOUR, sleepStart);
 
+        Screen minMan = null;
+        Screen maxMan = null;
+        for(Screen screen : manualScreens){
+            //TODO: filter to get min start time
+            //TODO: filter to get max end time
+        }
+
+        Map<String, UsageStats> automaticScreens
+                = getUsageStatistics(context, sleepStart - 4*HOUR, sleepStart);
+
+        Float duration = 0.0F;
+
+        return duration;
+    }
 
 
     //GOOGLE FIT

@@ -33,4 +33,7 @@ public interface ScreenDao {
     //tmp: used for JUnit tests
     @Query("SELECT * FROM Screen WHERE startTime = :sTime AND endTime = :eTime")
     Screen[] getSpecificScreen(long sTime, long eTime);
+
+    @Query("SELECT * FROM Screen WHERE endTime >= :sTime AND endTime <= :eTime")
+    Screen[] getScreenWithEndBetween(long sTime, long eTime);
 }

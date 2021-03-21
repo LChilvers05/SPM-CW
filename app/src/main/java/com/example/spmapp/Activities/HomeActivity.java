@@ -16,8 +16,6 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-        DataService.shared().getUsageStatistics(this, 0L, 0L);
     }
 
     public void logDataTapped(View view) {
