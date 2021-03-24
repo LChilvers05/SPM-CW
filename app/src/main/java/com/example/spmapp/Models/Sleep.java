@@ -33,7 +33,6 @@ public class Sleep {
     public Sleep(long startTime, long endTime, int quality) {
         this.startTime = startTime;
         this.endTime = endTime;
-        // since quality is entered manually, need to validate its value (range 1-10)
         this.quality = quality;
     }
 }

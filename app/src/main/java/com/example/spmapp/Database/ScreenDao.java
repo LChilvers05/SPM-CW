@@ -14,9 +14,9 @@ public interface ScreenDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insertScreen(Screen screen);
     @Update
-    public void updateScreen(Screen screen);
+    public void updateScreen(Screen screen); // use this to update a session's data
     @Delete
-    public void deleteScreen(Screen screen);
+    public void deleteScreen(Screen screen); // use this to delete a single screen
     // we could store a Sleep object in this class which would represent the latest sleep session
     // for which we have identified the preceding screen sessions to make it easier to determine
     // from what date and time on we shold be considering screen sessions as preceding a sleep
@@ -36,4 +36,17 @@ public interface ScreenDao {
 
     @Query("SELECT * FROM Screen WHERE endTime >= :sTime AND endTime <= :eTime")
     Screen[] getScreenWithEndBetween(long sTime, long eTime);
+    // returns any screens that end between the given times
+
+    @Query("DELETE FROM Screen WHERE startTime <= :givenTime")
+    void deleteScreensStartBefore(long givenTime);
+    // deletes all screens that start before/on a timestamp
+
+    @Query("DELETE FROM Screen WHERE startTime >= :givenStart AND startTime <= :givenEnd")
+    void deleteScreensBetween(long givenStart, long givenEnd);
+    // deletes all screens that took place (even partially) between 2 timestamps
+
+    @Query("DELETE FROM Screen WHERE endTime >= :givenTime")
+    void deleteScreensEndedAfter(long givenTime);
+    // deletes all screens that ended after/on the timestamp
 }
