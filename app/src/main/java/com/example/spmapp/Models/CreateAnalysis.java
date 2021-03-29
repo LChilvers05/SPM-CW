@@ -20,7 +20,7 @@ public class CreateAnalysis {
         this.endTime = endTime;
     }
 
-    public String createAverageSleepLengthChange(){
+    /* public String createAverageSleepLengthChange(){
         long[] firstHalf = sleepDao.getSleepLengthsBetween(startTime, endTime/2);
         long[] secondHalf = sleepDao.getSleepLengthsBetween(endTime/2, endTime);
         long firstHalfSum = 0;
@@ -61,5 +61,5 @@ public class CreateAnalysis {
         } else {
             return("You somehow spent the same amount of time in both halves...");
         }
-    }
+    } */
 }

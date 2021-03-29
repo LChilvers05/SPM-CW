@@ -38,8 +38,8 @@ public interface ScreenDao {
     Screen[] getScreenWithEndBetween(long sTime, long eTime);
     // returns any screens that end between the given times
 
-    @Query("SELECT length FROM Screen WHERE startTime >= :sTime AND endTime <= :eTime")
-    long[] getScreenLengthsBetween(long sTime, long eTime);
+    //@Query("SELECT length FROM Screen WHERE startTime >= :sTime AND endTime <= :eTime")
+    //long[] getScreenLengthsBetween(long sTime, long eTime);
 
     @Query("DELETE FROM Screen WHERE startTime <= :givenTime")
     void deleteScreensStartBefore(long givenTime);

@@ -30,12 +30,12 @@ public class Sleep {
     @NonNull
     public final int quality;
 
-    public final long length; // added a length attribute as it's the simplest way to do it in room
+    //public long length; // added a length attribute as it's the simplest way to do it in room
 
     public Sleep(long startTime, long endTime, int quality) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.quality = quality;
-        this.length = endTime - startTime;
+        //this.length = endTime - startTime;
     }
 }

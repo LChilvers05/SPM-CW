@@ -24,11 +24,11 @@ public class Screen {
     @NonNull
     public final long endTime;
 
-    public final long length;
+    //public long length;
 
     public Screen(long startTime, long endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
-        this.length = endTime - startTime;
+        //this.length = endTime - startTime;
     }
 }
