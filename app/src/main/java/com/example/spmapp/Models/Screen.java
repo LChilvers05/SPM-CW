@@ -24,11 +24,8 @@ public class Screen {
     @NonNull
     public final long endTime;
 
-    //public long length;
-
     public Screen(long startTime, long endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
-        //this.length = endTime - startTime;
     }
 }

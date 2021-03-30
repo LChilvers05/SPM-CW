@@ -10,29 +10,34 @@ public class CreateAnalysis {
 
     private final SleepDao sleepDao;
     private final ScreenDao screenDao;
-    private final long startTime;
-    private final long endTime;
 
-    private CreateAnalysis(Application application, long startTime, long endTime) {
+    private CreateAnalysis(Application application) {
         this.sleepDao = MainDatabase.getDB(application).sleepDao();
         this.screenDao = MainDatabase.getDB(application).screenDao();
-        this.startTime = startTime;
-        this.endTime = endTime;
     }
 
-    /* public String createAverageSleepLengthChange(){
-        long[] firstHalf = sleepDao.getSleepLengthsBetween(startTime, endTime/2);
-        long[] secondHalf = sleepDao.getSleepLengthsBetween(endTime/2, endTime);
-        long firstHalfSum = 0;
-        long secondHalfSum = 0;
-        for (long time : firstHalf){
-            firstHalfSum += time;
-        }
-        long firstHalfAverage = firstHalfSum / firstHalf.length;
-        for (long time : secondHalf){
-            secondHalfSum += time;
-        }
-        long secondHalfAverage = secondHalfSum / secondHalf.length;
+    private long[] calculateLengths(long[] startTimes, long[] endTimes){
+        long[] lengths = new long[startTimes.length];
+        for (int i = 0; i < startTimes.length; i++){
+            lengths[i] = startTimes[i] - endTimes[i];
+        } // returns an array of the lengths given array of start and end times
+        return lengths;
+    }
+
+    private long calculateAverageLength(long[] startTimes, long[] endTimes){
+        long[] lengths = calculateLengths(startTimes, endTimes);
+
+        long lengthSum = 0;
+        for (long time : lengths){
+            lengthSum += time;
+        } // returns the average lengths
+        return (lengthSum / lengths.length);
+    }
+
+    public String createAverageSleepLengthChange(long startTime, long endTime){
+        long firstHalfAverage = calculateAverageLength(sleepDao.getSleepStartsBetween(startTime, (endTime - startTime)/2), sleepDao.getSleepEndsBetween(startTime, (endTime - startTime)/2));
+        long secondHalfAverage = calculateAverageLength(sleepDao.getSleepStartsBetween((endTime - startTime)/2, endTime), sleepDao.getSleepEndsBetween((endTime - startTime)/2, endTime));
+        // outputs a message depending on the difference between first and second half of the data
         if (firstHalfAverage > secondHalfAverage){
             return("Your average sleep length has decreased by" + (firstHalfAverage - secondHalfAverage)/60 + "minutes");
         }
@@ -43,17 +48,19 @@ public class CreateAnalysis {
         }
     }
 
-    public String createAverageScreenTimeTotalChange(){
-        long[] firstHalf = screenDao.getScreenLengthsBetween(startTime, endTime/2);
-        long[] secondHalf = screenDao.getScreenLengthsBetween(endTime/2, endTime);
-        long firstHalfSum = 0;
-        long secondHalfSum = 0;
-        for (long time : firstHalf){
-            firstHalfSum += time;
+    private long calculateSum(long[] startTimes, long[] endTimes){
+        long[] lengths = calculateLengths(startTimes, endTimes);
+
+        long lengthSum = 0;
+        for (long time : lengths){
+            lengthSum += time;
         }
-        for (long time : secondHalf){
-            secondHalfSum += time;
-        }
+        return lengthSum;
+    }
+
+    public String createAverageScreenTimeTotalChange(long startTime, long endTime){
+        long firstHalfSum = calculateSum(screenDao.getScreenStartsBetween(startTime, (endTime - startTime)/2), screenDao.getScreenEndsBetween(startTime, (endTime - startTime)/2));
+        long secondHalfSum = calculateSum(screenDao.getScreenStartsBetween((endTime - startTime)/2, endTime), screenDao.getScreenEndsBetween((endTime - startTime)/2, endTime));
         if (firstHalfSum < secondHalfSum){
             return("You spent" + (secondHalfSum - firstHalfSum)/60 + "more minutes on screens in the second half");
         } else if (firstHalfSum > secondHalfSum){
@@ -61,5 +68,5 @@ public class CreateAnalysis {
         } else {
             return("You somehow spent the same amount of time in both halves...");
         }
-    } */
+    }
 }
