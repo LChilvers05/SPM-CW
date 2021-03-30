@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChartFactory {
-
+    //creating bar chart
     Context context;
 
     public ChartFactory(Context context) {
