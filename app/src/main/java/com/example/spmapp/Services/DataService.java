@@ -14,6 +14,7 @@ import androidx.annotation.RequiresApi;
 import com.example.spmapp.Database.MainDatabase;
 import com.example.spmapp.Database.ScreenDao;
 import com.example.spmapp.Database.SleepDao;
+import com.example.spmapp.Helpers.Constants;
 import com.example.spmapp.Models.Screen;
 import com.example.spmapp.Models.Sleep;
 
@@ -31,8 +32,6 @@ public class DataService {
 
     private final SleepDao sleepDao;
     private final ScreenDao screenDao;
-
-    private final int HOUR = 3600;
 
     private DataService(Application application) {
         this.sleepDao = MainDatabase.getDB(application).sleepDao();
@@ -60,6 +59,9 @@ public class DataService {
     }
 
     //fetch
+    public Sleep[] getSleepsBetweenPeriod(long startTime, long endTime) {
+        return sleepDao.getSleepWithStartBetween(startTime, endTime);
+    }
 
 
     //USAGE STATISTICS
@@ -95,7 +97,7 @@ public class DataService {
     @RequiresApi(api = Build.VERSION_CODES.Q)
     public Float getScreenTimeClosestToSleep(Context context, long sleepStart) {
         Screen[] manualScreens
-                = screenDao.getScreenWithEndBetween(sleepStart - 4*HOUR, sleepStart);
+                = screenDao.getScreenWithEndBetween(sleepStart - 4*Constants.HOUR, sleepStart);
 
         Screen minMan = null;
         Screen maxMan = null;
@@ -105,7 +107,7 @@ public class DataService {
         }
 
         Map<String, UsageStats> automaticScreens
-                = getUsageStatistics(context, sleepStart - 4*HOUR, sleepStart);
+                = getUsageStatistics(context, sleepStart - 4*Constants.HOUR, sleepStart);
 
         Float duration = 0.0F;
 

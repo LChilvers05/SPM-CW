@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 /**
- * For DataCollectorActivity subclasses to communicate with MainDatabase
+ * For DataCollectorActivity subclasses to communicate with MainDatabase through DataService
  */
 public class DataCollectorViewModel extends AndroidViewModel {
 

@@ -1,7 +1,9 @@
 package com.example.spmapp;
 
 import android.content.Context;
+import android.view.ViewGroup;
 
+import com.example.spmapp.Models.BarChartBar;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
@@ -23,11 +25,11 @@ public class ChartFactory {
         this.context = context;
     }
 
-    public BarDataSet createBarDataSet(ArrayList<Double> values, String title) {
+    public BarDataSet createBarDataSet(ArrayList<BarChartBar> bars, String title) {
         ArrayList<BarEntry> entries = new ArrayList<>();
 
-        for (int i = 0; i < values.size(); i++) {
-            BarEntry barEntry = new BarEntry(i, values.get(i).floatValue());
+        for (int i = 0; i < bars.size(); i++) {
+            BarEntry barEntry = new BarEntry(i, bars.get(i).getDuration());
             entries.add(barEntry);
         }
 
@@ -50,6 +52,8 @@ public class ChartFactory {
         barChart.getBarData().setBarWidth(barWidth);
 //        barChart.getXAxis().setAxisMinimum(//group);
 //        barChart.groupBars(//group, groupSpace, barSpace);
+
+        barChart.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
         return barChart;
     }

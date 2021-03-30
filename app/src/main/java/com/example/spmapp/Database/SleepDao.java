@@ -36,6 +36,10 @@ public interface SleepDao {
     Sleep[] getSleepWithEndBetween(long sTime, long eTime);
     // returns any sleeps that end between the given times
 
+    @Query("SELECT * FROM Sleep WHERE startTime >= :sTime AND startTime <= :eTime")
+    Sleep[] getSleepWithStartBetween(long sTime, long eTime);
+    //returns any sleeps that start between the given times
+
     @Query("SELECT startTime FROM Sleep WHERE startTime >= :sTime AND endTime <= :eTime")
     long[] getSleepStartsBetween(long sTime, long eTime);
 
