@@ -50,6 +50,7 @@ public class HomeActivityViewModel extends AndroidViewModel {
         long sleepStart = General.getUnixTime() - ((8-day)*Constants.DAY);
         long sleepEnd;
         Sleep[] daysSleeps = DataService.shared().getSleepsBetweenPeriod(reqStart, reqEnd);
+        //TODO: DON'T DO MERGED SLEEP
         if (daysSleeps.length != 0) {
             sleepStart = daysSleeps[0].startTime;
             sleepEnd = daysSleeps[daysSleeps.length - 1].endTime;
