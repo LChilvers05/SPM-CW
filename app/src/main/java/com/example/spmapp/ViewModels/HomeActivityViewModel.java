@@ -36,7 +36,10 @@ public class HomeActivityViewModel extends AndroidViewModel {
             long reqStart = startTime + (i*Constants.DAY);
             long reqEnd = startTime + ((i+1)*Constants.DAY);
 
-            dataSetData.add(getBar(reqStart, reqEnd, forSleep, i));
+            BarChartBar bar = getBar(reqStart, reqEnd, forSleep, i);
+            if (bar != null) {
+                dataSetData.add(bar);
+            }
         }
 
         return dataSetData;
@@ -57,6 +60,9 @@ public class HomeActivityViewModel extends AndroidViewModel {
         }
         //for screen
         Screen daysScreen = DataService.shared().getScreenTimeClosestToSleep(context, sleepStart);
-        return new BarChartBar(daysScreen.startTime, daysScreen.endTime);
+        if (daysScreen != null) {
+            return new BarChartBar(daysScreen.startTime, daysScreen.endTime);
+        }
+        return null;
     }
 }
