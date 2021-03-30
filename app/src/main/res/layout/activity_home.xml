@@ -11,6 +11,8 @@
         android:id="@+id/addLogDataButton"
         android:layout_width="91dp"
         android:layout_height="93dp"
+        android:layout_marginStart="284dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="36dp"
         android:layout_marginBottom="36dp"
         android:backgroundTint="#00496F"
@@ -20,20 +22,80 @@
         app:backgroundTint="#00FFFFFF"
         app:borderWidth="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tipsListView" />
 
-    <RelativeLayout
-        android:id="@+id/chart_layout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="200dp"
-        android:background="#1EFFFFFF"
-        android:visibility="visible"
+    <TextView
+        android:id="@+id/statsTextView"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="151dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="151dp"
+        android:layout_marginBottom="10dp"
+        android:background="#2595C8"
+        android:gravity="center|center_horizontal"
+        android:text="Statistics:"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/statsListView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <ListView
+        android:id="@+id/statsListView"
+        android:layout_width="390dp"
+        android:layout_height="134dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/tipsTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/statsTextView" />
+
+    <ListView
+        android:id="@+id/tipsListView"
+        android:layout_width="390dp"
+        android:layout_height="134dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toTopOf="@+id/addLogDataButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/tipsTextView" />
 
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/tipsTextView"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="106dp"
+        android:layout_marginEnd="106dp"
+        android:layout_marginBottom="10dp"
+        android:background="#2595C8"
+        android:gravity="center|center_horizontal"
+        android:text="Tips:"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tipsListView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/statsListView" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="413dp"
+        android:layout_height="229dp"
+        app:layout_constraintBottom_toTopOf="@+id/statsTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

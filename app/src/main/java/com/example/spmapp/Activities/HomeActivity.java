@@ -6,40 +6,28 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-import com.example.spmapp.ChartFactory;
-import com.example.spmapp.Helpers.Constants;
-import com.example.spmapp.Helpers.General;
-import com.example.spmapp.Models.BarChartBar;
 import com.example.spmapp.R;
-import com.example.spmapp.ViewModels.HomeActivityViewModel;
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.example.spmapp.Services.DataService;
 
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
-    RelativeLayout testChartRL;
-
-    HomeActivityViewModel viewModel;
-    ChartFactory chartFactory;
+    ListView statListView;
+    ListView tipsListView;
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-        testChartRL = findViewById(R.id.chart_layout);
-
-        viewModel = new HomeActivityViewModel(getApplication());
-        chartFactory = new ChartFactory(this);
-
-        drawCharts();
+        statListView = (ListView)findViewById(R.id.statsListView);
+        tipsListView = (ListView)findViewById(R.id.tipsListView);
+        loadStats();
+        loadTips();
     }
 
     public void logDataTapped(View view) {
@@ -47,18 +35,35 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(logPicker);
     }
 
-    private void drawCharts() {
+    public void loadStats(){
+        //get stats --> array --> update listview
+        ArrayList<String> statsArray = new ArrayList<String>();
 
-        ArrayList<IBarDataSet> dataSets = new ArrayList<>();
+        //examples of adding statistics
+        int screentime = 12;
+        statsArray.add("Total screentime: " + screentime);
 
-        ArrayList<BarChartBar> chartSleeps
-                = viewModel.getSleepsForBarChart(General.getUnixTime() - (Constants.DAY*8), General.getUnixTime());
-        dataSets.add(chartFactory.createBarDataSet(chartSleeps, "Sleep"));
+        int totalSleep = 7;
+        statsArray.add("Total sleep: " + totalSleep);
 
-        //TODO: chartScreens
-        //TODO: chartGap
+        //populates listview with stats
+        ArrayAdapter<String> statsArrayAdapter = new ArrayAdapter<String>(this, R.layout.custom_listview_item, R.id.itemTextViewContents, statsArray);
+        statListView.setAdapter(statsArrayAdapter);
+    }
 
-        BarChart barChart = chartFactory.createBarChart(dataSets);
-        testChartRL.addView(barChart);
+    public void loadTips(){
+        //generate tips --> array --> update listview
+        ArrayList<String> tipsArray = new ArrayList<String>();
+
+        //examples of adding tips
+        String tip1 = "Sleep more as this will really help you with achieving all your goals blah blah blah";
+        tipsArray.add(tip1);
+
+        String tip2 = "Sleep even more";
+        tipsArray.add(tip2);
+
+        //populates listview with tips
+        ArrayAdapter<String> tipsArrayAdapter = new ArrayAdapter<String>(this, R.layout.custom_listview_item, R.id.itemTextViewContents, tipsArray);
+        tipsListView.setAdapter(tipsArrayAdapter);
     }
 }
