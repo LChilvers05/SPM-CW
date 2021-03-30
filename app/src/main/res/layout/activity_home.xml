@@ -44,7 +44,7 @@
         app:layout_constraintBottom_toTopOf="@+id/statsListView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
+        app:layout_constraintTop_toBottomOf="@+id/chartView" />
 
     <ListView
         android:id="@+id/statsListView"
@@ -89,8 +89,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/statsListView" />
 
-    <View
-        android:id="@+id/view"
+    <RelativeLayout
+        android:id="@+id/chartView"
         android:layout_width="413dp"
         android:layout_height="229dp"
         app:layout_constraintBottom_toTopOf="@+id/statsTextView"

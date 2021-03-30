@@ -8,24 +8,41 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
+import com.example.spmapp.ChartFactory;
+import com.example.spmapp.Helpers.Constants;
+import com.example.spmapp.Helpers.General;
+import com.example.spmapp.Models.BarChartBar;
 import com.example.spmapp.R;
-import com.example.spmapp.Services.DataService;
+import com.example.spmapp.ViewModels.HomeActivityViewModel;
+import com.github.mikephil.charting.charts.Chart;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
+    RelativeLayout chartView;
     ListView statListView;
     ListView tipsListView;
+
+    HomeActivityViewModel viewModel;
+    ChartFactory chartFactory;
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        chartView = (RelativeLayout) findViewById(R.id.chartView);
         statListView = (ListView)findViewById(R.id.statsListView);
         tipsListView = (ListView)findViewById(R.id.tipsListView);
+
+        viewModel = new HomeActivityViewModel(getApplication());
+        chartFactory = new ChartFactory(this);
+
+        loadCharts();
         loadStats();
         loadTips();
     }
@@ -33,6 +50,18 @@ public class HomeActivity extends AppCompatActivity {
     public void logDataTapped(View view) {
         Intent logPicker = new Intent(this, LogPickerActivity.class);
         startActivity(logPicker);
+    }
+
+    private void loadCharts() {
+        ArrayList<IBarDataSet> dataSets = new ArrayList<>();
+
+        ArrayList<BarChartBar> chartSleeps
+                = viewModel.getSleepsForBarChart(General.getUnixTime() - (8* Constants.DAY), General.getUnixTime());
+        dataSets.add(chartFactory.createBarDataSet(chartSleeps, "Sleep"));
+
+        //TODO: same for screen and gap
+
+        chartView.addView(chartFactory.createBarChart(dataSets));
     }
 
     public void loadStats(){
