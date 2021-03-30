@@ -1,12 +1,17 @@
 package com.example.spmapp.ViewModels;
 
 import android.app.Application;
+import android.content.Context;
+import android.os.Build;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.AndroidViewModel;
 
 import com.example.spmapp.Helpers.Constants;
+import com.example.spmapp.Helpers.General;
 import com.example.spmapp.Models.BarChartBar;
+import com.example.spmapp.Models.Screen;
 import com.example.spmapp.Models.Sleep;
 import com.example.spmapp.Services.DataService;
 
@@ -14,12 +19,16 @@ import java.util.ArrayList;
 
 public class HomeActivityViewModel extends AndroidViewModel {
 
-    public HomeActivityViewModel(@NonNull Application application) {
+    Context context;
+
+    public HomeActivityViewModel(@NonNull Application application, Context context) {
         super(application);
+        this.context = context;
     }
 
-    public ArrayList<BarChartBar> getSleepsForBarChart(long startTime, long endTime) {
-        ArrayList<BarChartBar> chartSleeps = new ArrayList<>();
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    public ArrayList<BarChartBar> getDataForDataSet(long startTime, long endTime, Boolean forSleep) {
+        ArrayList<BarChartBar> dataSetData = new ArrayList<>();
 
         int days = (int) (endTime - startTime)/Constants.DAY;
 
@@ -27,14 +36,27 @@ public class HomeActivityViewModel extends AndroidViewModel {
             long reqStart = startTime + (i*Constants.DAY);
             long reqEnd = startTime + ((i+1)*Constants.DAY);
 
-            Sleep[] daysSleeps = DataService.shared().getSleepsBetweenPeriod(reqStart, reqEnd);
-            if (daysSleeps.length != 0) {
-                long start = daysSleeps[0].startTime;
-                long end = daysSleeps[daysSleeps.length - 1].endTime;
-                chartSleeps.add(new BarChartBar(start, end));
-            }
+            dataSetData.add(getBar(reqStart, reqEnd, forSleep, i));
         }
 
-        return chartSleeps;
+        return dataSetData;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    private BarChartBar getBar(long reqStart, long reqEnd, Boolean forSleep, int day) {
+        long sleepStart = General.getUnixTime() - ((8-day)*Constants.DAY);
+        long sleepEnd;
+        Sleep[] daysSleeps = DataService.shared().getSleepsBetweenPeriod(reqStart, reqEnd);
+        if (daysSleeps.length != 0) {
+            sleepStart = daysSleeps[0].startTime;
+            sleepEnd = daysSleeps[daysSleeps.length - 1].endTime;
+
+            if (forSleep) {
+                return new BarChartBar(sleepStart, sleepEnd);
+            }
+        }
+        //for screen
+        Screen daysScreen = DataService.shared().getScreenTimeClosestToSleep(context, sleepStart);
+        return new BarChartBar(daysScreen.startTime, daysScreen.endTime);
     }
 }

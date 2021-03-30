@@ -95,23 +95,24 @@ public class DataService {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
-    public Float getScreenTimeClosestToSleep(Context context, long sleepStart) {
+    public Screen getScreenTimeClosestToSleep(Context context, long sleepStart) {
         Screen[] manualScreens
-                = screenDao.getScreenWithEndBetween(sleepStart - 4*Constants.HOUR, sleepStart);
+                = screenDao.getScreenWithEndBetween(sleepStart - 8*Constants.HOUR, sleepStart);
 
-        Screen minMan = null;
         Screen maxMan = null;
         for(Screen screen : manualScreens){
-            //TODO: filter to get min start time
-            //TODO: filter to get max end time
+            if (maxMan == null) { maxMan = screen; }
+            if (screen.endTime > maxMan.endTime && screen.endTime < sleepStart) {
+                maxMan = screen;
+            }
         }
 
-        Map<String, UsageStats> automaticScreens
-                = getUsageStatistics(context, sleepStart - 4*Constants.HOUR, sleepStart);
+//        Map<String, UsageStats> automaticScreens
+//                = getUsageStatistics(context, sleepStart - 4*Constants.HOUR, sleepStart);
 
-        Float duration = 0.0F;
+//        Float duration = 0.0F;
 
-        return duration;
+        return maxMan;
     }
 
 
