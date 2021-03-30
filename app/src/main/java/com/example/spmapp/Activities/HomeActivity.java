@@ -74,7 +74,7 @@ public class HomeActivity extends AppCompatActivity {
             if (i < chartScreens.size()) {
                 BarChartBar sleepBar = chartSleeps.get(i);
                 BarChartBar screenBar = chartScreens.get(i);
-                chartGaps.add(new BarChartBar(screenBar.getEnd(), screenBar.getStart()));
+                chartGaps.add(new BarChartBar(screenBar.getEnd(), sleepBar.getStart()));
             }
         }
         dataSets.add(chartFactory.createBarDataSet(chartGaps, "Downtime"));
