@@ -36,7 +36,7 @@ public class HomeActivityViewModel extends AndroidViewModel {
             long reqStart = startTime + (i*Constants.DAY);
             long reqEnd = startTime + ((i+1)*Constants.DAY);
 
-            BarChartBar bar = getBar(reqStart, reqEnd, forSleep, i);
+            BarChartBar bar = getBar(reqStart, reqEnd, forSleep);
             if (bar != null) {
                 dataSetData.add(bar);
             }
@@ -46,33 +46,29 @@ public class HomeActivityViewModel extends AndroidViewModel {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
-    private BarChartBar getBar(long reqStart, long reqEnd, Boolean forSleep, int day) {
-        long sleepStart = General.getUnixTime() - ((8-day)*Constants.DAY);
-        long sleepEnd;
+    private BarChartBar getBar(long reqStart, long reqEnd, Boolean forSleep) {
         Sleep[] daysSleeps = DataService.shared().getSleepsBetweenPeriod(reqStart, reqEnd);
-
+        //get the longest sleep in this day
+        Sleep longestSleep = null;
         long longestDur = 0;
         for (Sleep daysSleep : daysSleeps) {
             long dur = daysSleep.endTime - daysSleep.startTime;
             if (dur > longestDur) {
                 longestDur = dur;
-
+                longestSleep = daysSleep;
             }
         }
-        //TODO: DON'T DO MERGED SLEEP
-        if (daysSleeps.length != 0) {
-            sleepStart = daysSleeps[0].startTime;
-            sleepEnd = daysSleeps[daysSleeps.length - 1].endTime;
-
+        if (longestSleep != null) {
             if (forSleep) {
-                return new BarChartBar(sleepStart, sleepEnd);
+                return new BarChartBar(longestSleep.startTime, longestSleep.endTime);
+            }
+            //for screen
+            Screen daysScreen = DataService.shared().getScreenTimeClosestToSleep(context, longestSleep.startTime);
+            if (daysScreen != null) {
+                return new BarChartBar(daysScreen.startTime, daysScreen.endTime);
             }
         }
-        //for screen
-        Screen daysScreen = DataService.shared().getScreenTimeClosestToSleep(context, sleepStart);
-        if (daysScreen != null) {
-            return new BarChartBar(daysScreen.startTime, daysScreen.endTime);
-        }
+
         return null;
     }
 }

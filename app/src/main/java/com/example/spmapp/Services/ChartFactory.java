@@ -1,6 +1,7 @@
 package com.example.spmapp.Services;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.ViewGroup;
 
 import com.example.spmapp.Models.BarChartBar;
@@ -21,6 +22,8 @@ public class ChartFactory {
     //creating bar chart
     Context context;
 
+
+
     public ChartFactory(Context context) {
         this.context = context;
     }
@@ -34,6 +37,13 @@ public class ChartFactory {
         }
 
         BarDataSet barDataSet = new BarDataSet(entries, title);
+        if (title.equals("Sleep")) {
+            barDataSet.setColor(Color.BLUE);
+        } else if (title.equals("Downtime")) {
+            barDataSet.setColor(Color.YELLOW);
+        } else {
+            barDataSet.setColor(Color.MAGENTA);
+        }
         return barDataSet;
     }
 

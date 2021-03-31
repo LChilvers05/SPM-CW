@@ -68,16 +68,16 @@ public class HomeActivity extends AppCompatActivity {
         ArrayList<BarChartBar> chartScreens
                 = viewModel.getDataForDataSet(General.getUnixTime() - (8* Constants.DAY), General.getUnixTime(), false);
         dataSets.add(chartFactory.createBarDataSet(chartScreens, "Closest Screen Time to Sleep"));
-        //create gap bars
-        ArrayList<BarChartBar> chartGaps = new ArrayList<>();
-        for (int i = 0; i < chartSleeps.size(); i++) {
-            if (i < chartScreens.size()) {
-                BarChartBar sleepBar = chartSleeps.get(i);
-                BarChartBar screenBar = chartScreens.get(i);
-                chartGaps.add(new BarChartBar(screenBar.getEnd(), sleepBar.getStart()));
-            }
-        }
-        dataSets.add(chartFactory.createBarDataSet(chartGaps, "Downtime"));
+//        //create gap bars
+//        ArrayList<BarChartBar> chartGaps = new ArrayList<>();
+//        for (int i = 0; i < chartSleeps.size(); i++) {
+//            if (i < chartScreens.size()) {
+//                BarChartBar sleepBar = chartSleeps.get(i);
+//                BarChartBar screenBar = chartScreens.get(i);
+//                chartGaps.add(new BarChartBar(screenBar.getEnd(), sleepBar.getStart()));
+//            }
+//        }
+//        dataSets.add(chartFactory.createBarDataSet(chartGaps, "Downtime"));
         //create and add bar chart
         chartView.removeAllViews();
         chartView.addView(chartFactory.createBarChart(dataSets));

@@ -99,13 +99,10 @@ public class DataService {
         Screen[] manualScreens
                 = screenDao.getScreenWithEndBetween(sleepStart - 8*Constants.HOUR, sleepStart);
 
-
-        System.out.println(manualScreens.length);
-
         Screen maxMan = null;
         for(Screen screen : manualScreens){
             if (maxMan == null) { maxMan = screen; }
-            if (screen.endTime > maxMan.endTime && screen.endTime < sleepStart) {
+            if ((screen.endTime > maxMan.endTime && screen.endTime < sleepStart)) {
                 maxMan = screen;
             }
         }

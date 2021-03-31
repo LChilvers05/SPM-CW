@@ -93,6 +93,7 @@
         android:id="@+id/chartView"
         android:layout_width="413dp"
         android:layout_height="229dp"
+        android:background="#7AFFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/statsTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
