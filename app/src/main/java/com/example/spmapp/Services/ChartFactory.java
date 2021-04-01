@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.ViewGroup;
 
-import com.example.spmapp.Helpers.BarYAxisValueFormatter;
+import com.example.spmapp.Helpers.SecondsToHoursValueFormatter;
 import com.example.spmapp.Models.BarChartBar;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -25,26 +25,29 @@ public class ChartFactory {
         this.context = context;
     }
 
-    private BarChart configureChartAppearance(BarChart chart) {
+    private void configureChartAppearance(BarChart chart) {
         chart.setPinchZoom(false);
         chart.setDrawBarShadow(false);
         chart.setDrawGridBackground(false);
-
         chart.getDescription().setEnabled(false);
 
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setGranularity(1.0f);
+        xAxis.setCenterAxisLabels(true);
+        xAxis.setAxisMinimum(0f);
+        xAxis.setAxisMaximum(8f + 0.25f);
 
         YAxis leftAxis = chart.getAxisLeft();
         leftAxis.setDrawGridLines(false);
         leftAxis.setAxisMinimum(0f);
         leftAxis.setAxisMaximum(12*3600f);
-        leftAxis.setValueFormatter(new BarYAxisValueFormatter());
+        leftAxis.setValueFormatter(new SecondsToHoursValueFormatter());
+        leftAxis.setSpaceTop(35f);
 
         chart.getAxisRight().setEnabled(false);
 
         chart.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        return chart;
     }
 
     public BarDataSet createBarDataSet(ArrayList<BarChartBar> bars, String title) {
@@ -63,17 +66,18 @@ public class ChartFactory {
         } else {
             barDataSet.setColor(Color.MAGENTA);
         }
+
         return barDataSet;
     }
 
     public BarChart createBarChart(List<IBarDataSet> dataSets) {
         BarData data = new BarData(dataSets);
         BarChart barChart = new BarChart(context);
-        barChart = configureChartAppearance(barChart);
+        configureChartAppearance(barChart);
 
-        float barSpace = 0.02f;
+        float barSpace = 0.1f;
         float barWidth = 0.2f;
-        float groupSpace = 1f - ((barSpace + barWidth) * dataSets.size());
+        float groupSpace = 1.0f - ((barSpace + barWidth) * dataSets.size());
 
         barChart.setData(data);
         barChart.getBarData().setBarWidth(barWidth);
