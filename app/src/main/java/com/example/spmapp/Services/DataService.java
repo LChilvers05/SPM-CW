@@ -97,7 +97,7 @@ public class DataService {
 
     public Screen getScreenTimeClosestToSleep(Context context, long sleepStart) {
         Screen[] manualScreens
-                = screenDao.getScreenWithEndBetween(sleepStart - 8*Constants.HOUR, sleepStart);
+                = screenDao.getScreenWithEndBetween(sleepStart - 24*Constants.HOUR, sleepStart);
 
         //gets the screen time closest to sleep by comparing end times
         Screen maxMan = null;

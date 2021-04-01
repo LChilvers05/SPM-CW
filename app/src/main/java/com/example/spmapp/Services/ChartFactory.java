@@ -72,7 +72,7 @@ public class ChartFactory {
         barChart = configureChartAppearance(barChart);
 
         float barSpace = 0.02f;
-        float barWidth = 0.4f;
+        float barWidth = 0.2f;
         float groupSpace = 1f - ((barSpace + barWidth) * dataSets.size());
 
         barChart.setData(data);
