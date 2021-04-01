@@ -26,6 +26,7 @@ import static android.app.AppOpsManager.OPSTR_GET_USAGE_STATS;
 /**
  * Singleton for communicating with Database, Google Fit and Usage Statistics
  */
+@RequiresApi(api = Build.VERSION_CODES.Q)
 public class DataService {
 
     private static DataService INSTANCE;
@@ -75,7 +76,6 @@ public class DataService {
     }
     //fetch
     //TODO: getLastTimestamp() is an important attribute
-    @RequiresApi(api = Build.VERSION_CODES.Q)
     public Map<String, UsageStats> getUsageStatistics(Context context, long startTime, long endTime) {
         if (checkForUsageStatsPermission(context)) {
             UsageStatsManager usageStatsManager
@@ -94,11 +94,12 @@ public class DataService {
         return null;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
+
     public Screen getScreenTimeClosestToSleep(Context context, long sleepStart) {
         Screen[] manualScreens
                 = screenDao.getScreenWithEndBetween(sleepStart - 8*Constants.HOUR, sleepStart);
 
+        //gets the screen time closest to sleep by comparing end times
         Screen maxMan = null;
         for(Screen screen : manualScreens){
             if (maxMan == null) { maxMan = screen; }

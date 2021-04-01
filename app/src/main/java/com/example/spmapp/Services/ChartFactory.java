@@ -4,15 +4,14 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.ViewGroup;
 
+import com.example.spmapp.Helpers.BarYAxisValueFormatter;
 import com.example.spmapp.Models.BarChartBar;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.formatter.DefaultAxisValueFormatter;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
 import java.util.ArrayList;
@@ -22,10 +21,30 @@ public class ChartFactory {
     //creating bar chart
     Context context;
 
-
-
     public ChartFactory(Context context) {
         this.context = context;
+    }
+
+    private BarChart configureChartAppearance(BarChart chart) {
+        chart.setPinchZoom(false);
+        chart.setDrawBarShadow(false);
+        chart.setDrawGridBackground(false);
+
+        chart.getDescription().setEnabled(false);
+
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+        YAxis leftAxis = chart.getAxisLeft();
+        leftAxis.setDrawGridLines(false);
+        leftAxis.setAxisMinimum(0f);
+        leftAxis.setAxisMaximum(12*3600f);
+        leftAxis.setValueFormatter(new BarYAxisValueFormatter());
+
+        chart.getAxisRight().setEnabled(false);
+
+        chart.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        return chart;
     }
 
     public BarDataSet createBarDataSet(ArrayList<BarChartBar> bars, String title) {
@@ -50,20 +69,15 @@ public class ChartFactory {
     public BarChart createBarChart(List<IBarDataSet> dataSets) {
         BarData data = new BarData(dataSets);
         BarChart barChart = new BarChart(context);
+        barChart = configureChartAppearance(barChart);
 
-        XAxis xAxis = barChart.getXAxis();
-        //TODO: AxisValueFormatter
-
-        float groupSpace = 0.08f;
         float barSpace = 0.02f;
         float barWidth = 0.4f;
+        float groupSpace = 1f - ((barSpace + barWidth) * dataSets.size());
 
         barChart.setData(data);
         barChart.getBarData().setBarWidth(barWidth);
-//        barChart.getXAxis().setAxisMinimum(//group);
-//        barChart.groupBars(//group, groupSpace, barSpace);
-
-        barChart.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        barChart.groupBars(0, groupSpace, barSpace);
 
         return barChart;
     }
