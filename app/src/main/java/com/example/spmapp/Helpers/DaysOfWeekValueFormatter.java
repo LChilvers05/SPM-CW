@@ -15,7 +15,7 @@ import java.util.Locale;
 public class DaysOfWeekValueFormatter extends ValueFormatter {
 
 
-    private ArrayList<String> daysOfWeekList = new ArrayList<>();
+    private final ArrayList<String> daysOfWeekList = new ArrayList<>();
 
     public DaysOfWeekValueFormatter () {
         arrangeXAxisDisplay();
