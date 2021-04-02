@@ -76,8 +76,6 @@ public class HomeActivity extends AppCompatActivity {
         dataSets.add(chartFactory.createBarDataSet(chartGaps, "Downtime"));
         dataSets.add(chartFactory.createBarDataSet(chartSleeps, "Sleep"));
 
-        System.out.println(chartSleeps.size());
-
         //create gap bars
         chartView.removeAllViews();
         chartView.addView(chartFactory.createBarChart(dataSets));

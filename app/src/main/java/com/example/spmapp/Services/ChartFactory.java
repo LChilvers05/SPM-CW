@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.ViewGroup;
 
+import com.example.spmapp.Helpers.DaysOfWeekValueFormatter;
 import com.example.spmapp.Helpers.SecondsToHoursValueFormatter;
 import com.example.spmapp.Models.BarChartBar;
 import com.github.mikephil.charting.charts.BarChart;
@@ -37,6 +38,7 @@ public class ChartFactory {
         xAxis.setCenterAxisLabels(true);
         xAxis.setAxisMinimum(0f);
         xAxis.setAxisMaximum(8f + 0.25f);
+        xAxis.setValueFormatter(new DaysOfWeekValueFormatter());
 
         YAxis leftAxis = chart.getAxisLeft();
         leftAxis.setDrawGridLines(false);
@@ -59,6 +61,7 @@ public class ChartFactory {
         }
 
         BarDataSet barDataSet = new BarDataSet(entries, title);
+
         if (title.equals("Sleep")) {
             barDataSet.setColor(Color.BLUE);
         } else if (title.equals("Downtime")) {
@@ -67,6 +70,7 @@ public class ChartFactory {
             barDataSet.setColor(Color.MAGENTA);
         }
 
+        barDataSet.setValueFormatter(new SecondsToHoursValueFormatter());
         return barDataSet;
     }
 

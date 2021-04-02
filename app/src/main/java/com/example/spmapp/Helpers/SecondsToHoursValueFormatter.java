@@ -8,4 +8,9 @@ public class SecondsToHoursValueFormatter extends ValueFormatter {
     public String getAxisLabel(float value, AxisBase axis) {
         return (int) (value / 3600f) + "hrs";
     }
+
+    @Override
+    public String getFormattedValue(float value) {
+        return Integer.toString((int)(value / 3600f));
+    }
 }
