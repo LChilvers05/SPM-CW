@@ -63,11 +63,11 @@ public class ChartFactory {
         BarDataSet barDataSet = new BarDataSet(entries, title);
 
         if (title.equals("Sleep")) {
-            barDataSet.setColor(Color.BLUE);
+            barDataSet.setColor(Color.parseColor("#2B6481"));
         } else if (title.equals("Downtime")) {
-            barDataSet.setColor(Color.YELLOW);
+            barDataSet.setColor(Color.parseColor("#EDAA3E"));
         } else {
-            barDataSet.setColor(Color.MAGENTA);
+            barDataSet.setColor(Color.parseColor("#D83775"));
         }
 
         barDataSet.setValueFormatter(new SecondsToHoursValueFormatter());
