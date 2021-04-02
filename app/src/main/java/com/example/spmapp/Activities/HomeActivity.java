@@ -13,12 +13,13 @@ import android.widget.RelativeLayout;
 import com.example.spmapp.Services.ChartFactory;
 import com.example.spmapp.Helpers.Constants;
 import com.example.spmapp.Helpers.General;
-import com.example.spmapp.Models.BarChartBar;
+import com.example.spmapp.Models.ChartSession;
 import com.example.spmapp.R;
 import com.example.spmapp.ViewModels.HomeActivityViewModel;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -58,27 +59,37 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void loadCharts() {
-        ArrayList<IBarDataSet> dataSets = new ArrayList<>();
+
         long endTime = General.getUnixTime(); //midnight
         long startTime = endTime - (8*Constants.DAY);
 
+        //BAR CHART
+        ArrayList<IBarDataSet> dataSets = new ArrayList<>();
         //create sleep bars
-        ArrayList<BarChartBar> chartSleeps
-                = viewModel.getDataForDataSet(startTime, endTime, true);
+        ArrayList<ChartSession> barChartSleeps
+                = viewModel.getDataForBarDataSet(startTime, endTime, true);
         //create screen bars
-        ArrayList<BarChartBar> chartScreens
-                = viewModel.getDataForDataSet(startTime, endTime, false);
+        ArrayList<ChartSession> barChartScreens
+                = viewModel.getDataForBarDataSet(startTime, endTime, false);
         //create gap bars
-        ArrayList<BarChartBar> chartGaps
-                = viewModel.getChartGapsForDataSet(chartSleeps, chartScreens);
+        ArrayList<ChartSession> barChartGaps
+                = viewModel.getChartGapsForBarDataSet(barChartSleeps, barChartScreens);
 
-        dataSets.add(chartFactory.createBarDataSet(chartScreens, "Closest Screen Time to Sleep"));
-        dataSets.add(chartFactory.createBarDataSet(chartGaps, "Downtime"));
-        dataSets.add(chartFactory.createBarDataSet(chartSleeps, "Sleep"));
+        dataSets.add(chartFactory.createBarDataSet(barChartScreens, "Closest Screen Time to Sleep"));
+        dataSets.add(chartFactory.createBarDataSet(barChartGaps, "Downtime"));
+        dataSets.add(chartFactory.createBarDataSet(barChartSleeps, "Sleep"));
+
+        BarChart barChart = chartFactory.createBarChart(dataSets);
+
+        //LINE CHART
+        ArrayList<ChartSession> lineChartScreens
+                = viewModel.getDataForLineDataSet(startTime, endTime);
+
+        LineChart lineChart = chartFactory.createLineChart(chartFactory.createLineDataSet(lineChartScreens));
 
         //create gap bars
         chartView.removeAllViews();
-        chartView.addView(chartFactory.createBarChart(dataSets));
+        chartView.addView(lineChart); //barChart
     }
 
     public void loadStats(){

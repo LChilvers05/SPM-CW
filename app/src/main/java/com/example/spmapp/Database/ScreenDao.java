@@ -8,6 +8,7 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.spmapp.Models.Screen;
+import com.example.spmapp.Models.Sleep;
 
 @Dao
 public interface ScreenDao {
@@ -37,6 +38,9 @@ public interface ScreenDao {
     @Query("SELECT * FROM Screen WHERE endTime >= :sTime AND endTime <= :eTime")
     Screen[] getScreenWithEndBetween(long sTime, long eTime);
     // returns any screens that end between the given times
+
+    @Query("SELECT * FROM Screen WHERE startTime >= :sTime AND startTime <= :eTime")
+    Screen[] getScreenWithStartBetween(long sTime, long eTime);
 
     @Query("SELECT startTime FROM Screen WHERE startTime >= :sTime AND endTime <= :eTime")
     long[] getScreenStartsBetween(long sTime, long eTime);

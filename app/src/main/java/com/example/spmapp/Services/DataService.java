@@ -64,6 +64,10 @@ public class DataService {
         return sleepDao.getSleepWithStartBetween(startTime, endTime);
     }
 
+    public Screen[] getScreensBetweenPeriod(long startTime, long endTime) {
+        return screenDao.getScreenWithStartBetween(startTime, endTime);
+    }
+
 
     //USAGE STATISTICS
     //permission
