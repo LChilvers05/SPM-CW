@@ -59,4 +59,8 @@ public interface ScreenDao {
     @Query("DELETE FROM Screen WHERE endTime >= :givenTime")
     void deleteScreensEndedAfter(long givenTime);
     // deletes all screens that ended after/on the timestamp
+
+    @Query("DELETE FROM Screen")
+    void deleteAllScreens();
+    // deletes all data in the screen table
 }

@@ -57,4 +57,8 @@ public interface SleepDao {
     @Query("DELETE FROM Sleep WHERE endTime >= :givenTime")
     void deleteSleepsEndedAfter(long givenTime);
     // deletes all sleeps that ended after/on the timestamp
+
+    @Query("DELETE FROM Sleep")
+    void deleteAllSleeps();
+    // deletes everything in the sleep table
 }

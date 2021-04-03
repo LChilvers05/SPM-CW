@@ -69,4 +69,40 @@ public class CreateAnalysis {
             return("You somehow spent the same amount of time in both halves...");
         }
     }
+
+    public String getAverageSleepTime(long startTime, long endTime){
+        float totalSleepTime = (float)calculateSum(sleepDao.getSleepStartsBetween(startTime, endTime), sleepDao.getSleepEndsBetween(startTime, endTime));
+        float timePeriod = (float)(endTime - startTime);
+        float percentage = totalSleepTime/timePeriod;
+        return("You slept an average of" + 24*percentage + "hours every day over this time period");
+    }
+
+    public String getAverageScreenTime(long startTime, long endTime){
+        float totalSleepTime = (float)calculateSum(screenDao.getScreenStartsBetween(startTime, endTime), screenDao.getScreenEndsBetween(startTime, endTime));
+        float timePeriod = (float)(endTime - startTime);
+        float percentage = totalSleepTime/timePeriod;
+        return("You looked at a screen an average of" + 24*percentage + "hours every day over this time period");
+    }
+
+    public String checkCorrelation(long startTime, long endTime){
+        long firstHalfScreenSum = calculateSum(screenDao.getScreenStartsBetween(startTime, (endTime - startTime)/2), screenDao.getScreenEndsBetween(startTime, (endTime - startTime)/2));
+        long secondHalfScreenSum = calculateSum(screenDao.getScreenStartsBetween((endTime - startTime)/2, endTime), screenDao.getScreenEndsBetween((endTime - startTime)/2, endTime));
+        long firstHalfSleepSum = calculateSum(sleepDao.getSleepStartsBetween(startTime, (endTime - startTime)/2), sleepDao.getSleepEndsBetween(startTime, (endTime - startTime)/2));
+        long secondHalfSleepSum = calculateSum(sleepDao.getSleepStartsBetween((endTime - startTime)/2, endTime), sleepDao.getSleepEndsBetween((endTime - startTime)/2, endTime));
+        if (firstHalfScreenSum > secondHalfScreenSum && firstHalfSleepSum > secondHalfSleepSum){
+            return("Your screen time decreased, but so did your sleep...");
+        } else if (firstHalfScreenSum > secondHalfScreenSum && firstHalfSleepSum < secondHalfSleepSum){
+            return("Your screen time decreased, and your sleep time increased!");
+        } else if (firstHalfScreenSum < secondHalfScreenSum && firstHalfSleepSum > secondHalfSleepSum){
+            return("Your screen time increased, and your sleep time decreased... curious.");
+        } else if (firstHalfScreenSum < secondHalfScreenSum && firstHalfSleepSum < secondHalfSleepSum){
+            return("Your screen time increased, and your sleep time did too... huh.");
+        }
+        return("You managed to have identical data over the two halves, impressive.");
+    }
+
+    public void deleteAllFromDatabase(){
+        screenDao.deleteAllScreens();
+        sleepDao.deleteAllSleeps();
+    }
 }
