@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.ViewGroup;
 
+import com.example.spmapp.Helpers.DateTimeValueFormatter;
 import com.example.spmapp.Helpers.DaysOfWeekValueFormatter;
+import com.example.spmapp.Helpers.OnOffValueFormatter;
 import com.example.spmapp.Helpers.SecondsToHoursValueFormatter;
 import com.example.spmapp.Models.ChartSession;
 import com.github.mikephil.charting.charts.BarChart;
@@ -20,6 +22,8 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ChartFactory {
@@ -106,6 +110,8 @@ public class ChartFactory {
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1.0f);
         xAxis.setCenterAxisLabels(true);
+        xAxis.setValueFormatter(new DateTimeValueFormatter());
+        xAxis.setLabelRotationAngle(-45f);
 
         YAxis leftAxis = chart.getAxisLeft();
         leftAxis.setDrawGridLines(false);
@@ -113,6 +119,7 @@ public class ChartFactory {
         leftAxis.setAxisMaximum(1f);
         leftAxis.setLabelCount(1);
         leftAxis.setSpaceTop(35f);
+        leftAxis.setValueFormatter(new OnOffValueFormatter());
 
         chart.getAxisRight().setEnabled(false);
 
@@ -124,20 +131,45 @@ public class ChartFactory {
 
         for (ChartSession session : sessions) {
             //starting point
-            entries.add(new Entry(session.getStart(), 0f));
+            if (checkExtraPoint(session, sessions, true)) {
+                entries.add(new Entry(session.getStart(), 0f));
+            }
             //start of screen time
-            entries.add(new Entry(session.getStart(), 0.5f));
+            entries.add(new Entry(session.getStart(), 1f));
             //end of screen time
-            entries.add(new Entry(session.getEnd(), 0.5f));
+            entries.add(new Entry(session.getEnd(), 1f));
             //ending point
-            entries.add(new Entry(session.getEnd(), 0f));
+            if (checkExtraPoint(session, sessions, false)) {
+                entries.add(new Entry(session.getEnd(), 0f));
+            }
         }
 
+        entries.sort((lhs, rhs) -> Float.compare(lhs.getX(), rhs.getX()));
+        
         LineDataSet dataSet = new LineDataSet(entries, "Screen Usage");
         dataSet.setColor(Color.GREEN);
         dataSet.setLineWidth(2f);
 
         return dataSet;
+    }
+
+    private boolean checkExtraPoint(ChartSession session, ArrayList<ChartSession> sessions, Boolean checkStart) {
+
+        boolean result = true;
+
+        for (ChartSession thisSession : sessions) {
+            if (checkStart) {
+                if (session.getStart() > thisSession.getStart() && session.getStart() < thisSession.getEnd()) {
+                    result = false;
+                }
+            } else {
+                if (session.getEnd() > thisSession.getStart() && session.getEnd() < thisSession.getEnd()) {
+                    result = false;
+                }
+            }
+        }
+
+        return result;
     }
 
     public LineChart createLineChart(LineDataSet dataSet) {

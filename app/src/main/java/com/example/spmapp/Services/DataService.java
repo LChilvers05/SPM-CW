@@ -65,7 +65,7 @@ public class DataService {
     }
 
     public Screen[] getScreensBetweenPeriod(long startTime, long endTime) {
-        return screenDao.getScreenWithStartBetween(startTime, endTime);
+        return screenDao.getScreenWithEndBetween(startTime, endTime);
     }
 
 
