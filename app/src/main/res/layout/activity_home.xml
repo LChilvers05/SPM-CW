@@ -96,7 +96,19 @@
         android:background="#7AFFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/statsTextView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/swapChartButton"
+        android:onClick="changeChart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#673AB7"
+        android:text="Change"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chartView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
