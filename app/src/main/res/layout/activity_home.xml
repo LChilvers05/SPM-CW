@@ -91,6 +91,7 @@
 
     <RelativeLayout
         android:id="@+id/chartView"
+        android:onClick="chartClicked"
         android:layout_width="413dp"
         android:layout_height="229dp"
         android:background="#7AFFFFFF"

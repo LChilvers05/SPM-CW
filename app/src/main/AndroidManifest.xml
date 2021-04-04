@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.spmapp">
 
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+
     <application
         android:name=".SPMApp"
         android:allowBackup="true"
@@ -11,30 +15,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SPMApp">
-
-        <activity android:name=".Activities.LogPickerActivity"
-            android:theme="@style/ActivityDialogTheme"/>
-
-        <activity android:name=".Activities.HomeActivity"
+        <activity android:name=".Activities.GraphDetail"></activity>
+        <activity
+            android:name=".Activities.LogPickerActivity"
+            android:theme="@style/ActivityDialogTheme" />
+        <activity
+            android:name=".Activities.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".Activities.ScreenCollectorActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
-        <activity android:name=".Activities.SleepCollectorActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
+        <activity
+            android:name=".Activities.ScreenCollectorActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Activities.SleepCollectorActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
-
-    <uses-permission
-        android:name="android.permission.PACKAGE_USAGE_STATS"
-        tools:ignore="ProtectedPermissions" />
 
 </manifest>

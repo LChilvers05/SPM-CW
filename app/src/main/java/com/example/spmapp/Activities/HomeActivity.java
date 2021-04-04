@@ -2,14 +2,19 @@ package com.example.spmapp.Activities;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.example.spmapp.Models.GlobalChartView;
 import com.example.spmapp.Services.ChartFactory;
 import com.example.spmapp.Helpers.Constants;
 import com.example.spmapp.Helpers.General;
@@ -17,8 +22,11 @@ import com.example.spmapp.Models.ChartSession;
 import com.example.spmapp.R;
 import com.example.spmapp.ViewModels.HomeActivityViewModel;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.listener.ChartTouchListener;
+import com.github.mikephil.charting.listener.OnChartGestureListener;
 
 import java.util.ArrayList;
 
@@ -32,6 +40,10 @@ public class HomeActivity extends AppCompatActivity {
     HomeActivityViewModel viewModel;
     ChartFactory chartFactory;
 
+    Chart showingChart;
+
+    Context thisContext;
+
     private boolean viewingBar = true;
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -43,6 +55,7 @@ public class HomeActivity extends AppCompatActivity {
         statListView = findViewById(R.id.statsListView);
         tipsListView = findViewById(R.id.tipsListView);
 
+        thisContext = this;
         viewModel = new HomeActivityViewModel(getApplication(), this);
         chartFactory = new ChartFactory(this);
     }
@@ -50,7 +63,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        loadCharts(true);
+        loadCharts(viewingBar, true);
         loadStats();
         loadTips();
     }
@@ -60,7 +73,7 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(logPicker);
     }
 
-    private void loadCharts(boolean loadBar) {
+    private void loadCharts(boolean loadBar, boolean addToView) {
 
         long endTime = General.getUnixTime(); //midnight
         long startTime = endTime - (8*Constants.DAY);
@@ -84,8 +97,11 @@ public class HomeActivity extends AppCompatActivity {
 
             BarChart barChart = chartFactory.createBarChart(dataSets);
 
-            chartView.removeAllViews();
-            chartView.addView(barChart);
+            if (addToView) {
+                chartView.removeAllViews();
+                chartView.addView(barChart);
+            }
+            showingChart = barChart;
         } else {
             //LINE CHART
             ArrayList<ChartSession> lineChartScreens
@@ -93,13 +109,57 @@ public class HomeActivity extends AppCompatActivity {
 
             LineChart lineChart = chartFactory.createLineChart(chartFactory.createLineDataSet(lineChartScreens));
 
-            chartView.removeAllViews();
-            chartView.addView(lineChart);
+            if (addToView) {
+                chartView.removeAllViews();
+                chartView.addView(lineChart);
+            }
+            showingChart = lineChart;
         }
+        showingChart.setOnChartGestureListener(new OnChartGestureListener() {
+            @Override
+            public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {}
+
+            @Override
+            public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {}
+
+            @Override
+            public void onChartLongPressed(MotionEvent me) {}
+
+            @Override
+            public void onChartDoubleTapped(MotionEvent me) {
+
+            }
+
+            @Override
+            public void onChartSingleTapped(MotionEvent me) {
+                loadCharts(viewingBar, false);
+                GlobalChartView.chartView = showingChart;
+                startActivity(new Intent(thisContext, GraphDetail.class));
+            }
+
+            @Override
+            public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
+
+            }
+
+            @Override
+            public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
+
+            }
+
+            @Override
+            public void onChartTranslate(MotionEvent me, float dX, float dY) {
+
+            }
+        });
+    }
+
+    public void chartClicked(View view) {
+
     }
 
     public void changeChart(View view) {
-        loadCharts(!viewingBar);
+        loadCharts(!viewingBar, true);
         viewingBar = !viewingBar;
     }
 
