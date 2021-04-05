@@ -11,7 +11,7 @@ public class CreateAnalysis {
     private final SleepDao sleepDao;
     private final ScreenDao screenDao;
 
-    private CreateAnalysis(Application application) {
+    public CreateAnalysis(Application application) {
         this.sleepDao = MainDatabase.getDB(application).sleepDao();
         this.screenDao = MainDatabase.getDB(application).screenDao();
     }

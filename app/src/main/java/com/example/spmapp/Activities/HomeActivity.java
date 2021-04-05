@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.example.spmapp.Models.CreateAnalysis;
 import com.example.spmapp.Models.GlobalChartView;
 import com.example.spmapp.Services.ChartFactory;
 import com.example.spmapp.Helpers.Constants;
@@ -36,6 +37,7 @@ public class HomeActivity extends AppCompatActivity {
     RelativeLayout chartView;
     ListView statListView;
     ListView tipsListView;
+    CreateAnalysis createAnalysis;
 
     HomeActivityViewModel viewModel;
     ChartFactory chartFactory;
@@ -51,6 +53,8 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        createAnalysis = new CreateAnalysis(getApplication());
         chartView = findViewById(R.id.chartView);
         statListView = findViewById(R.id.statsListView);
         tipsListView = findViewById(R.id.tipsListView);
@@ -167,12 +171,16 @@ public class HomeActivity extends AppCompatActivity {
         //get stats --> array --> update listview
         ArrayList<String> statsArray = new ArrayList<String>();
 
-        //examples of adding statistics
-        int screentime = 12;
-        statsArray.add("Total screentime: " + screentime);
+        /*
 
-        int totalSleep = 7;
-        statsArray.add("Total sleep: " + totalSleep);
+        Unsure what values to pass through
+
+        statsArray.add(createAnalysis.getAverageSleepTime());
+        statsArray.add(createAnalysis.createAverageSleepLengthChange());
+        statsArray.add(createAnalysis.getAverageScreenTime());
+        statsArray.add(createAnalysis.createAverageScreenTimeTotalChange());
+
+         */
 
         //populates listview with stats
         ArrayAdapter<String> statsArrayAdapter = new ArrayAdapter<String>(this, R.layout.custom_listview_item, R.id.itemTextViewContents, statsArray);
