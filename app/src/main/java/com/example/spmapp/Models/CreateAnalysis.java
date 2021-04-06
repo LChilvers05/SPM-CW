@@ -19,7 +19,7 @@ public class CreateAnalysis {
     private long[] calculateLengths(long[] startTimes, long[] endTimes){
         long[] lengths = new long[startTimes.length];
         for (int i = 0; i < startTimes.length; i++){
-            lengths[i] = startTimes[i] - endTimes[i];
+            lengths[i] = endTimes[i] - startTimes[i];
         } // returns an array of the lengths given array of start and end times
         return lengths;
     }
