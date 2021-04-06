@@ -9,11 +9,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-
 import com.example.spmapp.Models.CreateAnalysis;
 import com.example.spmapp.Models.GlobalChartView;
 import com.example.spmapp.Services.ChartFactory;
@@ -39,6 +37,9 @@ public class HomeActivity extends AppCompatActivity {
     ListView tipsListView;
     CreateAnalysis createAnalysis;
 
+    long endTime; //midnight
+    long startTime;
+
     HomeActivityViewModel viewModel;
     ChartFactory chartFactory;
 
@@ -54,7 +55,10 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        endTime = General.getUnixTime();
+        startTime = endTime - (8*Constants.DAY);
         createAnalysis = new CreateAnalysis(getApplication());
+        
         chartView = findViewById(R.id.chartView);
         statListView = findViewById(R.id.statsListView);
         tipsListView = findViewById(R.id.tipsListView);
@@ -171,16 +175,22 @@ public class HomeActivity extends AppCompatActivity {
         //get stats --> array --> update listview
         ArrayList<String> statsArray = new ArrayList<String>();
 
-        /*
+        try {
+            String averageSleep = createAnalysis.getAverageSleepTime(startTime, endTime);
+            statsArray.add(averageSleep);
 
-        Unsure what values to pass through
+            String averageSleepChange = createAnalysis.createAverageSleepLengthChange(startTime, endTime);
+            statsArray.add(averageSleepChange);
 
-        statsArray.add(createAnalysis.getAverageSleepTime());
-        statsArray.add(createAnalysis.createAverageSleepLengthChange());
-        statsArray.add(createAnalysis.getAverageScreenTime());
-        statsArray.add(createAnalysis.createAverageScreenTimeTotalChange());
+            String averageScreenTime = createAnalysis.getAverageScreenTime(startTime, endTime);
+            statsArray.add(averageScreenTime);
 
-         */
+            String averageScreenChange = createAnalysis.createAverageScreenTimeTotalChange(startTime, endTime);
+            statsArray.add(averageScreenChange);
+        }catch(Exception e){
+            System.out.println(e);
+            statsArray.add("Insufficient data.");
+        }
 
         //populates listview with stats
         ArrayAdapter<String> statsArrayAdapter = new ArrayAdapter<String>(this, R.layout.custom_listview_item, R.id.itemTextViewContents, statsArray);
