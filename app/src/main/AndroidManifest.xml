@@ -21,7 +21,7 @@
             android:theme="@style/ActivityDialogTheme" />
         <activity
             android:name=".Activities.HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/Theme.SPMApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,10 +30,16 @@
         </activity>
         <activity
             android:name=".Activities.ScreenCollectorActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/Theme.SPMApp"></activity>
         <activity
             android:name=".Activities.SleepCollectorActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/Theme.SPMApp"></activity>
+        <activity
+            android:name=".Activities.PrivacyAgreement"
+            android:theme="@style/Theme.SPMApp"></activity>
+        <activity
+            android:name=".Activities.UserPreferences"
+            android:theme="@style/Theme.SPMApp"></activity>
     </application>
 
 </manifest>

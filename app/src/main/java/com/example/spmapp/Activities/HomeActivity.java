@@ -7,6 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -68,6 +71,30 @@ public class HomeActivity extends AppCompatActivity {
         chartFactory = new ChartFactory(this);
     }
 
+    public boolean onCreateOptionsMenu(Menu menu){
+        //Display dropdown menu
+        MenuInflater dropdownMenuInflater = getMenuInflater();
+        dropdownMenuInflater.inflate(R.menu.dropdown_menu_layout, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem menuItem){
+        //Deals with dropdown menu item selection
+        super.onOptionsItemSelected(menuItem);
+        switch(menuItem.getItemId()){
+            case R.id.privacyLink:
+                startActivity(new Intent(this, PrivacyAgreement.class));
+                return true;
+
+            case R.id.preferencesLink:
+                startActivity(new Intent(this, UserPreferences.class));
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -75,6 +102,7 @@ public class HomeActivity extends AppCompatActivity {
         loadStats();
         loadTips();
     }
+
 
     public void logDataTapped(View view) {
         Intent logPicker = new Intent(this, LogPickerActivity.class);
