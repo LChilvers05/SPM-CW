@@ -7,7 +7,7 @@ public class OnOffValueFormatter extends ValueFormatter {
 
     @Override
     public String getAxisLabel(float value, AxisBase axis) {
-        if (value == 1f) {
+        if (value == 0.5f) {
             return "On";
         } else if (value == 0f) {
             return "Off";

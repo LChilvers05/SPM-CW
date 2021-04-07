@@ -29,7 +29,7 @@ public abstract class DataCollectorActivity extends AppCompatActivity {
         super.onStart();
         //set log button in initial state
         //TODO: COMMENT NEXT LINE FOR JUNIT TESTS
-//        setLogButton(checkFields());
+        setLogButton(checkFields());
         //set start/stop buttons initial state
         startTimerBtn.setEnabled(true);
         startTimerBtn.setAlpha(1.0F);
