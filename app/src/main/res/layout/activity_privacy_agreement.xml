@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/nightbackground">
+
+    <TextView
+        android:id="@+id/privacyTitleTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="72dp"
+        android:text="Privacy Agreement:"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/privacyAgreementContents"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/privacyAgreementContents"
+        android:layout_width="325dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="43dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="43dp"
+        android:text="- This privacy policy describes our policies and procedures on the collection and use of your data.\n\n- This data is used to generate feedback and advice on how to improve your sleep, in relation to your screentime.\n\n- At any point you are able to enable/disable automatic screentime/sleep data collection.\n\n- This data is stored locally on your device - no servers or cloud based services are used.\n\n - You are able to delete any data at your request using our data deletion page.\n\n- Upon deletion of the app, all collected app data is subsequently deleted too.\n\n- By accepting this agreement, you consent to your selection of sleep / screentime data to be automatically collected.\n\n- You can select what data to collect in the preferences page."
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/acceptPolicyBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/privacyTitleTV" />
+
+    <Button
+        android:id="@+id/acceptPolicyBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="160dp"
+        android:text="Accept"
+        app:layout_constraintBottom_toTopOf="@+id/policyStatusTV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/privacyAgreementContents" />
+
+    <TextView
+        android:id="@+id/policyStatusTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="141dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="141dp"
+        android:layout_marginBottom="120dp"
+        android:text="Status: not accepted"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/acceptPolicyBtn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
