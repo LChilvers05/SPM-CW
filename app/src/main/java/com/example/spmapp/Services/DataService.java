@@ -37,6 +37,10 @@ public class DataService {
     private DataService(Application application) {
         this.sleepDao = MainDatabase.getDB(application).sleepDao();
         this.screenDao = MainDatabase.getDB(application).screenDao();
+
+        if (sleepDao.getAllSleeps().length == 0) {
+            insertPresentationData();
+        };
     }
     //created once in SPMApp Class
     public static void create(Application application) {
@@ -47,6 +51,43 @@ public class DataService {
     //get single instance
     public static DataService shared() {
         return INSTANCE;
+    }
+
+    public void insertPresentationData() {
+        //Sprint Review Mon 12th April
+        //Wed 31st - Thu 1st
+        sleepDao.insertSleep(new Sleep(1617229845, 1617268365, 5));
+        screenDao.insertScreen(new Screen(1617225165, 1617227805));
+        //Thu 1st - Fri 2nd
+        sleepDao.insertSleep(new Sleep(1617309285, 1617337005, 5));
+        screenDao.insertScreen(new Screen(1617296985, 1617304005));
+        //Fri 2nd - Sat 3rd
+        sleepDao.insertSleep(new Sleep(1617392025, 1617430185, 5));
+        screenDao.insertScreen(new Screen(1617376605, 1617391005));
+        //Sat 3rd - Sun 4th
+        sleepDao.insertSleep(new Sleep(1617481845, 1617534105, 5));
+        screenDao.insertScreen(new Screen(1617438645, 1617439965));
+        //Sun 4th - Mon 5th
+        sleepDao.insertSleep(new Sleep(1617566565, 1617609765, 5));
+        screenDao.insertScreen(new Screen(1617544965, 1617559365));
+        //Mon 5th - Tue 6th
+        sleepDao.insertSleep(new Sleep(1617654616, 1617690616, 5));
+        screenDao.insertScreen(new Screen(1617648310, 1617653530));
+        //Tue 6th - Wed 7th
+        sleepDao.insertSleep(new Sleep(1617743712, 1617772512, 5));
+        screenDao.insertScreen(new Screen(1617708850, 1617710350));
+        //Wed 7th - Thu 8th
+        sleepDao.insertSleep(new Sleep(1617836313, 1617851003, 5));
+        screenDao.insertScreen(new Screen(1617823845, 1617823845));
+        //Thu 8th - Fri 9th
+        sleepDao.insertSleep(new Sleep(1617906236, 1617962462, 5));
+        screenDao.insertScreen(new Screen(1617889605, 1617900405));
+        //Fri 9th - Sat 10th
+        sleepDao.insertSleep(new Sleep(1617999705, 1618040771, 5));
+        screenDao.insertScreen(new Screen(1617962482, 1617999002));
+        //Sat 10th - Sun 11th
+        sleepDao.insertSleep(new Sleep(1618076712, 1618103516, 5));
+        screenDao.insertScreen(new Screen(1618060125, 1618063725));
     }
 
     //DATABASE
