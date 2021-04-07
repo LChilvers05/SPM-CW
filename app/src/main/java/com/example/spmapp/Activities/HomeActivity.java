@@ -22,6 +22,7 @@ import com.example.spmapp.Helpers.Constants;
 import com.example.spmapp.Helpers.General;
 import com.example.spmapp.Models.ChartSession;
 import com.example.spmapp.R;
+import com.example.spmapp.Services.DataService;
 import com.example.spmapp.ViewModels.HomeActivityViewModel;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.Chart;
@@ -69,6 +70,8 @@ public class HomeActivity extends AppCompatActivity {
         thisContext = this;
         viewModel = new HomeActivityViewModel(getApplication(), this);
         chartFactory = new ChartFactory(this);
+
+//        DataService.shared().insertAutomaticScreens(this, startTime, endTime);
     }
 
     public boolean onCreateOptionsMenu(Menu menu){

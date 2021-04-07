@@ -120,45 +120,41 @@ public class DataService {
 //        startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
     }
     //fetch
-    //TODO: getLastTimestamp() is an important attribute
-    public Map<String, UsageStats> getUsageStatistics(Context context, long startTime, long endTime) {
+    public void insertAutomaticScreens(Context context, long startTime, long endTime) {
         if (checkForUsageStatsPermission(context)) {
             UsageStatsManager usageStatsManager
                     = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
             Map<String, UsageStats> stats
-                    = usageStatsManager.queryAndAggregateUsageStats(startTime, endTime);
-            //TODO: filter the stats to things the user cares about
-            //print out the stats
-//            stats.entrySet().forEach(entry->{
-//                System.out.println(entry.getValue().getPackageName() + " " + entry.getValue().getLastTimeVisible());
-//            });
-            return stats;
+                    = usageStatsManager.queryAndAggregateUsageStats(startTime*1000, endTime*1000);
+            stats.entrySet().forEach(entry->{
+                long screenEnd = entry.getValue().getLastTimeVisible()/1000L;
+                if (screenEnd != 0L) {
+//                    String[] screenPackage = entry.getValue().getPackageName().split(".");
+//                    String screenName = screenPackage[screenPackage.length - 1];
+
+                    long screenDuration = entry.getValue().getTotalTimeVisible()/1000L;
+                    recordScreenPeriod(screenEnd - screenDuration, screenEnd);
+                }
+            });
         } else {
             context.startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
         }
-        return null;
     }
 
 
     public Screen getScreenTimeClosestToSleep(Context context, long sleepStart) {
-        Screen[] manualScreens
+        Screen[] screens
                 = screenDao.getScreenWithEndBetween(sleepStart - 24*Constants.HOUR, sleepStart);
 
         //gets the screen time closest to sleep by comparing end times
-        Screen maxMan = null;
-        for(Screen screen : manualScreens){
-            if (maxMan == null) { maxMan = screen; }
-            if ((screen.endTime > maxMan.endTime && screen.endTime < sleepStart)) {
-                maxMan = screen;
+        Screen closest = null;
+        for(Screen screen : screens){
+            if (closest == null) { closest = screen; }
+            if ((screen.endTime > closest.endTime && screen.endTime < sleepStart)) {
+                closest = screen;
             }
         }
-
-//        Map<String, UsageStats> automaticScreens
-//                = getUsageStatistics(context, sleepStart - 4*Constants.HOUR, sleepStart);
-
-//        Float duration = 0.0F;
-
-        return maxMan;
+        return closest;
     }
 
 

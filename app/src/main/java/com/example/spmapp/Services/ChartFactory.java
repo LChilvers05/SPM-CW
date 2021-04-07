@@ -135,9 +135,9 @@ public class ChartFactory {
                 entries.add(new Entry(session.getStart(), 0f));
             }
             //start of screen time
-            entries.add(new Entry(session.getStart(), 1f));
+            entries.add(new Entry(session.getStart(), 0.5f));
             //end of screen time
-            entries.add(new Entry(session.getEnd(), 1f));
+            entries.add(new Entry(session.getEnd(), 0.5f));
             //ending point
             if (checkExtraPoint(session, sessions, false)) {
                 entries.add(new Entry(session.getEnd(), 0f));
