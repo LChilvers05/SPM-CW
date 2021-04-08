@@ -71,7 +71,7 @@ public class HomeActivity extends AppCompatActivity {
         viewModel = new HomeActivityViewModel(getApplication(), this);
         chartFactory = new ChartFactory(this);
 
-//        DataService.shared().insertAutomaticScreens(this, startTime, endTime);
+        DataService.shared().insertAutomaticScreens(this, startTime, endTime);
     }
 
     public boolean onCreateOptionsMenu(Menu menu){

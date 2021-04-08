@@ -12,7 +12,7 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-@Entity(primaryKeys = {"startTime", "endTime"})
+@Entity(primaryKeys = {"startTime"})
 @TypeConverters(DateConverter.class)
 public class Screen {
     // since these records are referenced in the ScreenSleepMap, there should probably be a

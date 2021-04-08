@@ -129,11 +129,12 @@ public class DataService {
             stats.entrySet().forEach(entry->{
                 long screenEnd = entry.getValue().getLastTimeVisible()/1000L;
                 if (screenEnd != 0L) {
-//                    String[] screenPackage = entry.getValue().getPackageName().split(".");
-//                    String screenName = screenPackage[screenPackage.length - 1];
-
-                    long screenDuration = entry.getValue().getTotalTimeVisible()/1000L;
-                    recordScreenPeriod(screenEnd - screenDuration, screenEnd);
+                    String[] screenPackage = entry.getValue().getPackageName().split("\\.");
+                    String screenName = screenPackage[screenPackage.length - 1];
+                    if(!screenName.equals("nexuslauncher")) {
+                        long screenDuration = entry.getValue().getTotalTimeVisible()/1000L;
+                        recordScreenPeriod(screenEnd - screenDuration, screenEnd);
+                    }
                 }
             });
         } else {

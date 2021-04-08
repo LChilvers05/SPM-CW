@@ -149,6 +149,7 @@ public class ChartFactory {
         LineDataSet dataSet = new LineDataSet(entries, "Screen Usage");
         dataSet.setColor(Color.GREEN);
         dataSet.setLineWidth(2f);
+        dataSet.setDrawValues(false);
 
         return dataSet;
     }
