@@ -78,14 +78,14 @@ public class CreateAnalysis {
         float totalSleepTime = (float)calculateSum(sleepDao.getSleepStartsBetween(startTime, endTime), sleepDao.getSleepEndsBetween(startTime, endTime));
         float timePeriod = (float)(endTime - startTime);
         float percentage = totalSleepTime/timePeriod;
-        return("Daily sleep average: " + 24*percentage + " hours.");
+        return("Daily sleep average: " + Math.round(24*percentage * 100.0) / 100.0 + " hours.");
     }
 
     public String getAverageScreenTime(long startTime, long endTime){
         float totalSleepTime = (float)calculateSum(screenDao.getScreenStartsBetween(startTime, endTime), screenDao.getScreenEndsBetween(startTime, endTime));
         float timePeriod = (float)(endTime - startTime);
         float percentage = totalSleepTime/timePeriod;
-        return("Daily screentime average: " + 24*percentage + " hours.");
+        return("Daily screentime average: " + Math.round(24*percentage * 100.0) / 100.0 + " hours.");
     }
 
     public String checkCorrelation(long startTime, long endTime){
