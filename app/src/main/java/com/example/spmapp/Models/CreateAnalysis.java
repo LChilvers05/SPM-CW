@@ -39,8 +39,8 @@ public class CreateAnalysis {
     }
 
     public String createAverageSleepLengthChange(long startTime, long endTime){
-        long firstHalfAverage = calculateAverageLength(sleepDao.getSleepStartsBetween(startTime, (endTime - startTime)/2), sleepDao.getSleepEndsBetween(startTime, (endTime - startTime)/2));
-        long secondHalfAverage = calculateAverageLength(sleepDao.getSleepStartsBetween((endTime - startTime)/2, endTime), sleepDao.getSleepEndsBetween((endTime - startTime)/2, endTime));
+        long firstHalfAverage = calculateAverageLength(sleepDao.getSleepStartsBetween(startTime, startTime + (endTime - startTime)/2), sleepDao.getSleepEndsBetween(startTime, startTime + (endTime - startTime)/2));
+        long secondHalfAverage = calculateAverageLength(sleepDao.getSleepStartsBetween(startTime + (endTime - startTime)/2, endTime), sleepDao.getSleepEndsBetween(startTime + (endTime - startTime)/2, endTime));
         // outputs a message depending on the difference between first and second half of the data
         if (firstHalfAverage > secondHalfAverage){
             return("Your average sleep length has decreased by " + (firstHalfAverage - secondHalfAverage)/60 + " minutes");
@@ -63,8 +63,8 @@ public class CreateAnalysis {
     }
 
     public String createAverageScreenTimeTotalChange(long startTime, long endTime){
-        long firstHalfSum = calculateSum(screenDao.getScreenStartsBetween(startTime, (endTime - startTime)/2), screenDao.getScreenEndsBetween(startTime, (endTime - startTime)/2));
-        long secondHalfSum = calculateSum(screenDao.getScreenStartsBetween((endTime - startTime)/2, endTime), screenDao.getScreenEndsBetween((endTime - startTime)/2, endTime));
+        long firstHalfSum = calculateSum(screenDao.getScreenStartsBetween(startTime, startTime + (endTime - startTime)/2), screenDao.getScreenEndsBetween(startTime, startTime + (endTime - startTime)/2));
+        long secondHalfSum = calculateSum(screenDao.getScreenStartsBetween(startTime + (endTime - startTime)/2, endTime), screenDao.getScreenEndsBetween(startTime + (endTime - startTime)/2, endTime));
         if (firstHalfSum < secondHalfSum){
             return("You spent " + (secondHalfSum - firstHalfSum)/60 + " more minutes on screens in the second half");
         } else if (firstHalfSum > secondHalfSum){
@@ -89,10 +89,10 @@ public class CreateAnalysis {
     }
 
     public String checkCorrelation(long startTime, long endTime){
-        long firstHalfScreenSum = calculateSum(screenDao.getScreenStartsBetween(startTime, (endTime - startTime)/2), screenDao.getScreenEndsBetween(startTime, (endTime - startTime)/2));
-        long secondHalfScreenSum = calculateSum(screenDao.getScreenStartsBetween((endTime - startTime)/2, endTime), screenDao.getScreenEndsBetween((endTime - startTime)/2, endTime));
-        long firstHalfSleepSum = calculateSum(sleepDao.getSleepStartsBetween(startTime, (endTime - startTime)/2), sleepDao.getSleepEndsBetween(startTime, (endTime - startTime)/2));
-        long secondHalfSleepSum = calculateSum(sleepDao.getSleepStartsBetween((endTime - startTime)/2, endTime), sleepDao.getSleepEndsBetween((endTime - startTime)/2, endTime));
+        long firstHalfScreenSum = calculateSum(screenDao.getScreenStartsBetween(startTime, startTime + (endTime - startTime)/2), screenDao.getScreenEndsBetween(startTime, startTime + (endTime - startTime)/2));
+        long secondHalfScreenSum = calculateSum(screenDao.getScreenStartsBetween(startTime + (endTime - startTime)/2, endTime), screenDao.getScreenEndsBetween(startTime + (endTime - startTime)/2, endTime));
+        long firstHalfSleepSum = calculateSum(sleepDao.getSleepStartsBetween(startTime, startTime + (endTime - startTime)/2), sleepDao.getSleepEndsBetween(startTime, startTime + (endTime - startTime)/2));
+        long secondHalfSleepSum = calculateSum(sleepDao.getSleepStartsBetween(startTime + (endTime - startTime)/2, endTime), sleepDao.getSleepEndsBetween(startTime + (endTime - startTime)/2, endTime));
         if (firstHalfScreenSum > secondHalfScreenSum && firstHalfSleepSum > secondHalfSleepSum){
             return("Your screen time decreased, but so did your sleep...");
         } else if (firstHalfScreenSum > secondHalfScreenSum && firstHalfSleepSum < secondHalfSleepSum){
