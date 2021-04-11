@@ -1,7 +1,5 @@
 <resources>
-    <string name="app_name">SPMApp</string>
-    <string name="log_title">Log {sleep/screentime}</string>
-    <string name="timer_title">Start timer before {sleep/session}</string>
+    <string name="app_name">Sleep tracker</string>
     <string name="log_btn_text">Log</string>
 
 </resources>
