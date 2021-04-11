@@ -130,7 +130,7 @@ public class HomeActivity extends AppCompatActivity {
             ArrayList<ChartSession> barChartGaps
                     = viewModel.getChartGapsForBarDataSet(barChartSleeps, barChartScreens);
 
-            dataSets.add(chartFactory.createBarDataSet(barChartScreens, "Closest Screen Time to Sleep"));
+            dataSets.add(chartFactory.createBarDataSet(barChartScreens, "Screen Time Prior to Sleep"));
             dataSets.add(chartFactory.createBarDataSet(barChartGaps, "Downtime"));
             dataSets.add(chartFactory.createBarDataSet(barChartSleeps, "Sleep"));
 
