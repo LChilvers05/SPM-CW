@@ -12,8 +12,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="72dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="72dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="73dp"
+        android:layout_marginBottom="5dp"
         android:text="Privacy Agreement:"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
@@ -28,41 +29,29 @@
         android:layout_width="325dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="43dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="43dp"
         android:text="- This privacy policy describes our policies and procedures on the collection and use of your data.\n\n- This data is used to generate feedback and advice on how to improve your sleep, in relation to your screentime.\n\n- At any point you are able to enable/disable automatic screentime/sleep data collection.\n\n- This data is stored locally on your device - no servers or cloud based services are used.\n\n - You are able to delete any data at your request using our data deletion page.\n\n- Upon deletion of the app, all collected app data is subsequently deleted too.\n\n- By accepting this agreement, you consent to your selection of sleep / screentime data to be automatically collected.\n\n- You can select what data to collect in the preferences page."
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/acceptPolicyBtn"
+        app:layout_constraintBottom_toTopOf="@+id/privacyAgreementCheckbox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/privacyTitleTV" />
 
-    <Button
-        android:id="@+id/acceptPolicyBtn"
+    <CheckBox
+        android:id="@+id/privacyAgreementCheckbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="160dp"
+        android:layout_marginStart="153dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="152dp"
+        android:layout_marginBottom="82dp"
+        android:onClick="checkboxClick"
         android:text="Accept"
-        app:layout_constraintBottom_toTopOf="@+id/policyStatusTV"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/privacyAgreementContents" />
-
-    <TextView
-        android:id="@+id/policyStatusTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="141dp"
-        android:layout_marginTop="11dp"
-        android:layout_marginEnd="141dp"
-        android:layout_marginBottom="120dp"
-        android:text="Status: not accepted"
         android:textColor="#FFFFFF"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/acceptPolicyBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/privacyAgreementContents" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
