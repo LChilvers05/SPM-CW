@@ -29,7 +29,7 @@ public class Tips {
     public String sleepingTip(){ // makes a tip to do with sleeping
         long currentTime = Instant.now().getEpochSecond();
         boolean wasSleepBetter = isSleepBetter(currentTime - 604800L, currentTime);
-        int tipNumber = (int) Math.floor(Math.random()*(4)); // get a random tip number
+        int tipNumber = (int) Math.floor(Math.random()*(12)); // get a random tip number
         if (!wasSleepBetter){ // if the sleep has gotten worse
             switch (tipNumber) { // return that tip
                 case 0:
@@ -40,6 +40,22 @@ public class Tips {
                     return "You slept less recently, try to wind down before by, e.g. a book or bath.";
                 case 3:
                     return "You slept less recently, try to make sure your bedroom is dark and quiet.";
+                case 4:
+                    return "You slept less recently, try to make sure your bedroom is only for sleep.";
+                case 5:
+                    return "You slept less recently, try to get some sunlight in the day.";
+                case 6:
+                    return "You slept less recently, try not to go to bed if you aren't tired.";
+                case 7:
+                    return "You slept less recently, try to avoid naps where possible.";
+                case 8:
+                    return "You slept less recently, try to eat dinner a few hours before bed.";
+                case 9:
+                    return "You slept less recently, try to maintain a good fluid balance.";
+                case 10:
+                    return "You slept less recently, try not to look at the clock in bed.";
+                case 11:
+                    return "You slept less recently, try avoiding caffeine 6 hours before bed.";
             }
         }
         return "You've slept for longer recently, keep it up!";
