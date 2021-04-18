@@ -109,6 +109,14 @@ public class DataService {
         return screenDao.getScreenWithEndBetween(startTime, endTime);
     }
 
+    //delete
+    public void deleteSleepPeriod(long startTime, long endTime) {
+        sleepDao.deleteSleepsBetween(startTime, endTime);
+    }
+    public void deleteScreenPeriod(long startTime, long endTime) {
+        screenDao.deleteScreensBetween(startTime, endTime);
+    }
+
 
     //USAGE STATISTICS
     //permission
@@ -157,12 +165,4 @@ public class DataService {
         }
         return closest;
     }
-
-
-    //GOOGLE FIT
-
-
-
-
-
 }

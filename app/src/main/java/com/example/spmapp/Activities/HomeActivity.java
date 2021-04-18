@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+
+import com.example.spmapp.DeleteDataActivity;
 import com.example.spmapp.Models.CreateAnalysis;
 import com.example.spmapp.Models.GlobalChartView;
 import com.example.spmapp.Services.ChartFactory;
@@ -91,6 +93,10 @@ public class HomeActivity extends AppCompatActivity {
 
             case R.id.preferencesLink:
                 startActivity(new Intent(this, UserPreferences.class));
+                return true;
+
+            case R.id.deleteLink:
+                startActivity(new Intent(this, DeleteDataActivity.class));
                 return true;
 
             default:

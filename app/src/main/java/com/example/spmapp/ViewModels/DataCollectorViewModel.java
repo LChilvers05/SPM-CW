@@ -3,9 +3,11 @@ package com.example.spmapp.ViewModels;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.AndroidViewModel;
 
 import com.example.spmapp.Helpers.Constants;
@@ -24,6 +26,7 @@ import java.util.Locale;
 /**
  * For DataCollectorActivity subclasses to communicate with MainDatabase through DataService
  */
+@RequiresApi(api = Build.VERSION_CODES.Q)
 public class DataCollectorViewModel extends AndroidViewModel {
 
     //used to save timer start
@@ -95,5 +98,20 @@ public class DataCollectorViewModel extends AndroidViewModel {
     private String getKey() {
         if (forSleep) { return Constants.SLEEP_TIMER_START_KEY; }
         return Constants.SCREEN_TIMER_START_KEY;
+    }
+
+    public void deleteSession(String startDate, String endDate, Boolean forSleep) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/M/yyyy", Locale.ENGLISH);
+        try {
+            long startTimestamp = General.getUnixTimeFromDate(formatter.parse(startDate));
+            long endTimestamp = General.getUnixTimeFromDate(formatter.parse(endDate));
+            if (forSleep) {
+                DataService.shared().deleteSleepPeriod(startTimestamp, endTimestamp);
+            } else {
+                DataService.shared().deleteScreenPeriod(startTimestamp, endTimestamp);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }

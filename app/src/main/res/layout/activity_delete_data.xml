@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/nightbackground"
+    tools:context=".DeleteDataActivity">
+
+    <TextView
+        android:id="@+id/deleteTitleTextView"
+        android:layout_width="253dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="500dp"
+        android:gravity="center|center_horizontal"
+        android:text="Delete data collected"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/deleteDataButton"
+        android:layout_width="130dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/purple_500"
+        android:onClick="deleteData"
+        android:text="Delete"
+        android:textColor="#ffffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deleteSleepCheck" />
+
+    <EditText
+        android:id="@+id/deleteStartDateEntry"
+        android:layout_width="175dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="200dp"
+        android:background="#3F51B5"
+        android:backgroundTint="#030A32"
+        android:ems="10"
+        android:hint="Start date"
+        android:inputType="time"
+        android:outlineProvider="none"
+        android:padding="10dp"
+        android:textAlignment="center"
+        android:textColor="#FDFCFC"
+        android:textColorHint="#FFFCFC"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deleteTitleTextView" />
+
+    <EditText
+        android:id="@+id/deleteEndDateEntry"
+        android:layout_width="175dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:background="#3F51B5"
+        android:backgroundTint="#030A32"
+        android:ems="10"
+        android:hint="End date"
+        android:inputType="time"
+        android:outlineProvider="none"
+        android:padding="10dp"
+        android:textAlignment="center"
+        android:textColor="#FDFCFC"
+        android:textColorHint="#FFFCFC"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deleteStartDateEntry" />
+
+    <CheckBox
+        android:id="@+id/deleteSleepCheck"
+        android:onClick="checkboxClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="22dp"
+        android:text="For Sleep"
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deleteEndDateEntry" />
+
+    <CheckBox
+        android:id="@+id/deleteScreenCheck"
+        android:onClick="checkboxClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="80dp"
+        android:text="For Screen"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deleteEndDateEntry" />
+</androidx.constraintlayout.widget.ConstraintLayout>

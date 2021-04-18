@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SPMApp">
-        <activity android:name=".Activities.GraphDetail"></activity>
+        <activity android:name=".DeleteDataActivity"></activity>
+        <activity android:name=".Activities.GraphDetail" />
         <activity
             android:name=".Activities.LogPickerActivity"
             android:theme="@style/ActivityDialogTheme" />
@@ -30,16 +31,16 @@
         </activity>
         <activity
             android:name=".Activities.ScreenCollectorActivity"
-            android:theme="@style/Theme.SPMApp"></activity>
+            android:theme="@style/Theme.SPMApp" />
         <activity
             android:name=".Activities.SleepCollectorActivity"
-            android:theme="@style/Theme.SPMApp"></activity>
+            android:theme="@style/Theme.SPMApp" />
         <activity
             android:name=".Activities.PrivacyAgreement"
-            android:theme="@style/Theme.SPMApp"></activity>
+            android:theme="@style/Theme.SPMApp" />
         <activity
             android:name=".Activities.UserPreferences"
-            android:theme="@style/Theme.SPMApp"></activity>
+            android:theme="@style/Theme.SPMApp" />
     </application>
 
 </manifest>

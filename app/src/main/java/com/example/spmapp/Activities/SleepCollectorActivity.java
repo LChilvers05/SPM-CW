@@ -2,17 +2,21 @@ package com.example.spmapp.Activities;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+
 import com.example.spmapp.R;
 import com.example.spmapp.ViewModels.DataCollectorViewModel;
 import java.time.LocalDateTime;
 
-
+@RequiresApi(api = Build.VERSION_CODES.Q)
 public class SleepCollectorActivity extends DataCollectorActivity {
 
     //views

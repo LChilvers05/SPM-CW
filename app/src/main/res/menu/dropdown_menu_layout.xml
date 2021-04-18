@@ -6,4 +6,8 @@
     <item
         android:id="@+id/preferencesLink"
         android:title="Data preferences" />
+    <item
+        android:id="@+id/deleteLink"
+        android:title="Delete Data" />
+
 </menu>
