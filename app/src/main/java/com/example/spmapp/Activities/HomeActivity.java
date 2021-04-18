@@ -22,6 +22,7 @@ import com.example.spmapp.DeleteDataActivity;
 import com.example.spmapp.Helpers.NotifyService;
 import com.example.spmapp.Models.CreateAnalysis;
 import com.example.spmapp.Models.GlobalChartView;
+import com.example.spmapp.Models.Tips;
 import com.example.spmapp.Services.ChartFactory;
 import com.example.spmapp.Helpers.Constants;
 import com.example.spmapp.Helpers.General;
@@ -36,8 +37,11 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.Q)
 public class HomeActivity extends AppCompatActivity {
@@ -46,6 +50,7 @@ public class HomeActivity extends AppCompatActivity {
     ListView statListView;
     ListView tipsListView;
     CreateAnalysis createAnalysis;
+    Tips tips;
 
     long endTime; //midnight
     long startTime;
@@ -68,6 +73,7 @@ public class HomeActivity extends AppCompatActivity {
         endTime = General.getUnixTime();
         startTime = endTime - (8*Constants.DAY);
         createAnalysis = new CreateAnalysis(getApplication());
+        tips = new Tips(getApplication());
         
         chartView = findViewById(R.id.chartView);
         statListView = findViewById(R.id.statsListView);
@@ -262,17 +268,10 @@ public class HomeActivity extends AppCompatActivity {
 
     public void loadTips(){
         //generate tips --> array --> update listview
-        ArrayList<String> tipsArray = new ArrayList<String>();
 
-        //examples of adding tips
-        String tip1 = "Sleep more as this will really help you with achieving all your goals blah blah blah";
-        tipsArray.add(tip1);
-
-        String tip2 = "Sleep even more";
-        tipsArray.add(tip2);
-
-        //populates listview with tips
+        List<String> tipsArray = Arrays.asList(tips.return3Tips());
         ArrayAdapter<String> tipsArrayAdapter = new ArrayAdapter<String>(this, R.layout.custom_listview_item, R.id.itemTextViewContents, tipsArray);
         tipsListView.setAdapter(tipsArrayAdapter);
+
     }
 }
