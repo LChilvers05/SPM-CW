@@ -3,6 +3,8 @@ package com.example.spmapp.Activities;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -17,6 +19,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.example.spmapp.DeleteDataActivity;
+import com.example.spmapp.Helpers.NotifyService;
 import com.example.spmapp.Models.CreateAnalysis;
 import com.example.spmapp.Models.GlobalChartView;
 import com.example.spmapp.Services.ChartFactory;
@@ -34,6 +37,7 @@ import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 @RequiresApi(api = Build.VERSION_CODES.Q)
 public class HomeActivity extends AppCompatActivity {
@@ -110,6 +114,28 @@ public class HomeActivity extends AppCompatActivity {
         loadCharts(viewingBar, true);
         loadStats();
         loadTips();
+
+//        Intent notifyIntent = new Intent(this, MyReceiver.class);
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast
+//                (thisContext, 2, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        AlarmManager alarmManager = (AlarmManager) thisContext.getSystemService(Context.ALARM_SERVICE);
+//        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  System.currentTimeMillis(),
+//                1000 * 60, pendingIntent);
+
+        Intent myIntent = new Intent(getApplicationContext(), NotifyService.class);
+        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+        PendingIntent pendingIntent = PendingIntent.getService(this, 0, myIntent, 0);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.SECOND, 30);
+        calendar.set(Calendar.MINUTE, 50);
+        calendar.set(Calendar.HOUR, 7);
+        calendar.set(Calendar.AM_PM, Calendar.PM);
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 1000*60*60*24 , pendingIntent);
+
+
     }
 
 
