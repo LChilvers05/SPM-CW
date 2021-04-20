@@ -43,11 +43,7 @@
             android:name=".Activities.UserPreferences"
             android:theme="@style/Theme.SPMApp" />
 
-        <service
-            android:name = ".Helpers.NotifyService"
-            android:enabled = "true"
-            android:exported = "true" >
-        </service>
+        <receiver android:name=".Helpers.NotificationReceiver"/>
 
     </application>
 
