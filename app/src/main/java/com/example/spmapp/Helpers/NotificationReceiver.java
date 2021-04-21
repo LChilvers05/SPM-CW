@@ -12,6 +12,7 @@ import android.graphics.Color;
 import androidx.core.app.NotificationCompat;
 
 import com.example.spmapp.Activities.HomeActivity;
+import com.example.spmapp.Activities.SleepCollectorActivity;
 import com.example.spmapp.R;
 import com.example.spmapp.SettingsActivity;
 
@@ -20,10 +21,10 @@ public class NotificationReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         int notificationId = 1;
-        String message = "A Test Notification";
+        String message = "Click here to log your sleep";
 
         //when notification is tapped, go to HomeActivity
-        Intent homeIntent = new Intent(context, HomeActivity.class);
+        Intent homeIntent = new Intent(context, SleepCollectorActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, homeIntent, 0);
 
         NotificationManager myNotificationManager =
@@ -47,7 +48,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         //prepare notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID);
         builder.setSmallIcon(R.drawable.start_timer_icon)
-                .setContentTitle("Title")
+                .setContentTitle("It's time to wind down for bed")
                 .setContentText(message)
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true)

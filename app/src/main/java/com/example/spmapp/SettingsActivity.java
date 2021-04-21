@@ -9,10 +9,14 @@ import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.spmapp.Activities.HomeActivity;
+import com.example.spmapp.Helpers.Constants;
 import com.example.spmapp.Helpers.NotificationReceiver;
 
 import java.time.LocalDateTime;
@@ -20,15 +24,24 @@ import java.util.Calendar;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    SharedPreferences prefs;
     EditText reminderTimeEditTxt;
     TimePickerDialog timePicker;
 
     LocalDateTime localDateTime;
 
+    Intent intent;
+    PendingIntent notificationIntent;
+    AlarmManager alarm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        intent = new Intent(SettingsActivity.this, NotificationReceiver.class);
+        notificationIntent = PendingIntent.getBroadcast(SettingsActivity.this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         reminderTimeEditTxt = findViewById(R.id.reminderTimeEntry);
         localDateTime = LocalDateTime.now();
@@ -39,6 +52,11 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        prefs = this.getSharedPreferences(Constants.REMINDER_PREFS_KEY, Context.MODE_PRIVATE);
+        String notificationTime = prefs.getString(Constants.NOTIFY_START_KEY, "NULL");
+        if (!notificationTime.equals("NULL")) {
+            reminderTimeEditTxt.setText(notificationTime);
+        }
     }
 
     private void launchTimePicker() {
@@ -54,7 +72,18 @@ public class SettingsActivity extends AppCompatActivity {
                     timeString = selectedHours + ":" + selectedMinutes;
                 }
                 reminderTimeEditTxt.setText(timeString);
+                SharedPreferences.Editor prefsEditor = prefs.edit();
+                prefsEditor.putString(Constants.NOTIFY_START_KEY, timeString);
+                prefsEditor.apply();
+
+                //delete old alarm
+                if (notificationIntent != null && alarm != null) {
+                    alarm.cancel(notificationIntent);
+                }
+
                 setReminder(selectedHours, selectedMinutes);
+
+                Toast.makeText(this, "Notification set", Toast.LENGTH_SHORT).show();
 
             }, localDateTime.getHour(), localDateTime.getMinute(), true);
             timePicker.show();
@@ -62,16 +91,22 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void setReminder(int hour, int minute) {
-        Intent intent = new Intent(SettingsActivity.this, NotificationReceiver.class);
-        PendingIntent notificationIntent = PendingIntent.getBroadcast(SettingsActivity.this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
         Calendar startTime = Calendar.getInstance();
         startTime.set(Calendar.HOUR_OF_DAY, hour);
         startTime.set(Calendar.MINUTE, minute);
         startTime.set(Calendar.SECOND, 0);
         long alarmStartTime = startTime.getTimeInMillis();
 
-//        alarm.setRepeating(AlarmManager.RTC_WAKEUP, alarmStartTime, AlarmManager.INTERVAL_DAY, notificationIntent);
+        //TODO: WANT THIS ONE BUT FOR SOME REASON DOES NOT WORK FOR PRESENTATION JUST USE SET
+//        alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, alarmStartTime, AlarmManager.INTERVAL_DAY, notificationIntent);
         alarm.set(AlarmManager.RTC_WAKEUP, alarmStartTime, notificationIntent);
+    }
+
+    public void cancelAlarm(View view) {
+        reminderTimeEditTxt.getText().clear();
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        prefsEditor.putString(Constants.NOTIFY_START_KEY, null);
+        prefsEditor.apply();
+        alarm.cancel(notificationIntent);
     }
 }

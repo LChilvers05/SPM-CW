@@ -50,7 +50,7 @@
         android:background="#3F51B5"
         android:backgroundTint="#030A32"
         android:ems="10"
-        android:hint="22:00"
+        android:hint="Nothing Set"
         android:inputType="time"
         android:outlineProvider="none"
         android:padding="1dp"
@@ -61,5 +61,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reminderTitle" />
+
+    <Button
+        android:id="@+id/button"
+        android:onClick="cancelAlarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="37dp"
+        android:text="Cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reminderTimeEntry" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
