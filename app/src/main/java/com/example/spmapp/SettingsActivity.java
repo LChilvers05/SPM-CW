@@ -36,6 +36,11 @@ public class SettingsActivity extends AppCompatActivity {
         launchTimePicker();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
     private void launchTimePicker() {
         //edit text
         reminderTimeEditTxt.setInputType(0);
@@ -66,6 +71,7 @@ public class SettingsActivity extends AppCompatActivity {
         startTime.set(Calendar.SECOND, 0);
         long alarmStartTime = startTime.getTimeInMillis();
 
-        alarm.setRepeating(AlarmManager.RTC_WAKEUP, alarmStartTime, AlarmManager.INTERVAL_DAY, notificationIntent);
+//        alarm.setRepeating(AlarmManager.RTC_WAKEUP, alarmStartTime, AlarmManager.INTERVAL_DAY, notificationIntent);
+        alarm.set(AlarmManager.RTC_WAKEUP, alarmStartTime, notificationIntent);
     }
 }

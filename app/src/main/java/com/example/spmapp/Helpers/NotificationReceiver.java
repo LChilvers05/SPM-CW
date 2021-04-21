@@ -13,6 +13,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.spmapp.Activities.HomeActivity;
 import com.example.spmapp.R;
+import com.example.spmapp.SettingsActivity;
 
 public class NotificationReceiver extends BroadcastReceiver {
     @Override
