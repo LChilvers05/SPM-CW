@@ -29,6 +29,7 @@ import com.example.spmapp.Helpers.General;
 import com.example.spmapp.Models.ChartSession;
 import com.example.spmapp.R;
 import com.example.spmapp.Services.DataService;
+import com.example.spmapp.SettingsActivity;
 import com.example.spmapp.ViewModels.HomeActivityViewModel;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.Chart;
@@ -97,6 +98,11 @@ public class HomeActivity extends AppCompatActivity {
         //Deals with dropdown menu item selection
         super.onOptionsItemSelected(menuItem);
         switch(menuItem.getItemId()){
+
+            case R.id.settingsLink:
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+
             case R.id.privacyLink:
                 startActivity(new Intent(this, PrivacyAgreement.class));
                 return true;
@@ -120,17 +126,6 @@ public class HomeActivity extends AppCompatActivity {
         loadCharts(viewingBar, true);
         loadStats();
         loadTips();
-
-        Intent intent = new Intent(HomeActivity.this, NotificationReceiver.class);
-        PendingIntent notificationIntent = PendingIntent.getBroadcast(HomeActivity.this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
-        Calendar startTime = Calendar.getInstance();
-        startTime.set(Calendar.HOUR_OF_DAY, 20);
-        startTime.set(Calendar.MINUTE, 0);
-        startTime.set(Calendar.SECOND, 0);
-        long alarmStartTime = startTime.getTimeInMillis();
-
-        alarm.setRepeating(AlarmManager.RTC_WAKEUP, alarmStartTime, AlarmManager.INTERVAL_DAY, notificationIntent);
     }
 
 

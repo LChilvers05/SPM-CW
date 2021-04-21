@@ -9,5 +9,8 @@
     <item
         android:id="@+id/deleteLink"
         android:title="Delete Data" />
+    <item
+        android:id="@+id/settingsLink"
+        android:title="Settings" />
 
 </menu>
