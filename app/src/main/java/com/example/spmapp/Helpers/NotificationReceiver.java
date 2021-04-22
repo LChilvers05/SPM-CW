@@ -1,6 +1,5 @@
 package com.example.spmapp.Helpers;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -11,10 +10,8 @@ import android.graphics.Color;
 
 import androidx.core.app.NotificationCompat;
 
-import com.example.spmapp.Activities.HomeActivity;
 import com.example.spmapp.Activities.SleepCollectorActivity;
 import com.example.spmapp.R;
-import com.example.spmapp.SettingsActivity;
 
 public class NotificationReceiver extends BroadcastReceiver {
     @Override

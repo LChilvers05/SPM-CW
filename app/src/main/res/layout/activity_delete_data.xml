@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/nightbackground"
-    tools:context=".DeleteDataActivity">
+    tools:context=".Activities.DeleteDataActivity">
 
     <TextView
         android:id="@+id/deleteTitleTextView"

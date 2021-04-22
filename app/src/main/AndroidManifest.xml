@@ -15,8 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SPMApp">
-        <activity android:name=".SettingsActivity"></activity>
-        <activity android:name=".DeleteDataActivity" />
+        <activity android:name=".Activities.SettingsActivity"></activity>
+        <activity android:name=".Activities.DeleteDataActivity" />
         <activity android:name=".Activities.GraphDetail" />
         <activity
             android:name=".Activities.LogPickerActivity"

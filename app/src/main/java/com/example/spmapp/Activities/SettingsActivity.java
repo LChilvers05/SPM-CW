@@ -1,4 +1,4 @@
-package com.example.spmapp;
+package com.example.spmapp.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.spmapp.Helpers.Constants;
 import com.example.spmapp.Helpers.NotificationReceiver;
 import com.example.spmapp.Models.StreakCalculator;
+import com.example.spmapp.R;
 
 import java.time.LocalDateTime;
 import java.util.Calendar;
@@ -157,6 +158,6 @@ public class SettingsActivity extends AppCompatActivity {
         //defaults to equivalent of 8 hours, if no goal set by user
         StreakCalculator streakCalculator = new StreakCalculator(getApplication(), goal);
         int streakCount = streakCalculator.getStreak(goal);
-        streakTextView.setText("Streak:"+streakCount);
+        streakTextView.setText("Sleep Streak: "+streakCount);
     }
 }
