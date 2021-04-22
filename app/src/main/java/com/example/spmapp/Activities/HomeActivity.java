@@ -3,8 +3,6 @@ package com.example.spmapp.Activities;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,8 +18,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
-import com.example.spmapp.DeleteDataActivity;
-import com.example.spmapp.Helpers.NotificationReceiver;
 import com.example.spmapp.Models.CreateAnalysis;
 import com.example.spmapp.Models.GlobalChartView;
 import com.example.spmapp.Models.StreakCalculator;
@@ -32,7 +28,6 @@ import com.example.spmapp.Helpers.General;
 import com.example.spmapp.Models.ChartSession;
 import com.example.spmapp.R;
 import com.example.spmapp.Services.DataService;
-import com.example.spmapp.SettingsActivity;
 import com.example.spmapp.ViewModels.HomeActivityViewModel;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.Chart;
@@ -41,10 +36,8 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -270,7 +263,7 @@ public class HomeActivity extends AppCompatActivity {
         //defaults to equivalent of 8 hours, if no goal set by user
         StreakCalculator streakCalculator = new StreakCalculator(getApplication(), goal);
         int streakCount = streakCalculator.getStreak(goal);
-        setTitle("Streak: "+streakCount);
+        setTitle("Sleep Streak: " +streakCount);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.spmapp;
+package com.example.spmapp.Activities;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.spmapp.R;
 import com.example.spmapp.ViewModels.DataCollectorViewModel;
 
 import java.time.LocalDateTime;
