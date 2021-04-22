@@ -147,9 +147,10 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void setLengthGoal(int hours, int minutes){
         long length = (hours * 3600) + ((minutes/60)*3600);
-
-        sharedPreferences.edit().putLong("lengthGoal", length);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putLong("lengthGoal", length).apply();
         Toast.makeText(this, "Length goal set", Toast.LENGTH_SHORT).show();
+        calculateStreak();
     }
 
     private void calculateStreak(){
