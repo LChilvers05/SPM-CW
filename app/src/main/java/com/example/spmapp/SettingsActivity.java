@@ -3,21 +3,21 @@ package com.example.spmapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.spmapp.Activities.HomeActivity;
 import com.example.spmapp.Helpers.Constants;
 import com.example.spmapp.Helpers.NotificationReceiver;
+import com.example.spmapp.Models.StreakCalculator;
 
 import java.time.LocalDateTime;
 import java.util.Calendar;
@@ -26,7 +26,14 @@ public class SettingsActivity extends AppCompatActivity {
 
     SharedPreferences prefs;
     EditText reminderTimeEditTxt;
-    TimePickerDialog timePicker;
+    TimePickerDialog bedtimePicker;
+
+    EditText sleepLengthEditTxt;
+    TimePickerDialog lengthPicker;
+
+    TextView streakTextView;
+
+    SharedPreferences sharedPreferences;
 
     LocalDateTime localDateTime;
 
@@ -44,9 +51,17 @@ public class SettingsActivity extends AppCompatActivity {
         alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         reminderTimeEditTxt = findViewById(R.id.reminderTimeEntry);
+        sleepLengthEditTxt = findViewById(R.id.sleepGoal);
+
+        streakTextView = findViewById(R.id.streakCounter);
+
         localDateTime = LocalDateTime.now();
 
-        launchTimePicker();
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        calculateStreak();
+        launchBedtimePicker();
+        launchSleepLengthPicker();
     }
 
     @Override
@@ -59,12 +74,12 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    private void launchTimePicker() {
+    private void launchBedtimePicker() {
         //edit text
         reminderTimeEditTxt.setInputType(0);
 
         reminderTimeEditTxt.setOnClickListener(view -> {
-            timePicker = new TimePickerDialog(SettingsActivity.this, (thisTimePicker, selectedHours, selectedMinutes) -> {
+            bedtimePicker = new TimePickerDialog(SettingsActivity.this, (thisTimePicker, selectedHours, selectedMinutes) -> {
                 String timeString;
                 if(selectedMinutes < 10) {
                     timeString = selectedHours + ":0" + selectedMinutes;
@@ -86,7 +101,7 @@ public class SettingsActivity extends AppCompatActivity {
                 Toast.makeText(this, "Notification set", Toast.LENGTH_SHORT).show();
 
             }, localDateTime.getHour(), localDateTime.getMinute(), true);
-            timePicker.show();
+            bedtimePicker.show();
         });
     }
 
@@ -108,5 +123,40 @@ public class SettingsActivity extends AppCompatActivity {
         prefsEditor.putString(Constants.NOTIFY_START_KEY, null);
         prefsEditor.apply();
         alarm.cancel(notificationIntent);
+    }
+
+    private void launchSleepLengthPicker(){
+
+        sleepLengthEditTxt.setInputType(0);
+
+        sleepLengthEditTxt.setOnClickListener(view -> {
+            lengthPicker = new TimePickerDialog(this, (startTimePicker, selectedHours, selectedMinutes) -> {
+                String sessionLengthString;
+                if(selectedMinutes<10){
+                    sessionLengthString = selectedHours + ":0" + selectedMinutes;
+                }else{
+                    sessionLengthString = selectedHours + ":" + selectedMinutes;
+                }
+                sleepLengthEditTxt.setText(sessionLengthString);
+                setLengthGoal(selectedHours, selectedMinutes);
+            }, 0, 0, true);
+            lengthPicker.setTitle("Select session length");
+            lengthPicker.show();
+        });
+    }
+
+    private void setLengthGoal(int hours, int minutes){
+        long length = (hours * 3600) + ((minutes/60)*3600);
+
+        sharedPreferences.edit().putLong("lengthGoal", length);
+        Toast.makeText(this, "Length goal set", Toast.LENGTH_SHORT).show();
+    }
+
+    private void calculateStreak(){
+        long goal = sharedPreferences.getLong("lengthGoal", 28800);
+        //defaults to equivalent of 8 hours, if no goal set by user
+        StreakCalculator streakCalculator = new StreakCalculator(getApplication(), goal);
+        int streakCount = streakCalculator.getStreak(goal);
+        streakTextView.setText("Streak:"+streakCount);
     }
 }
