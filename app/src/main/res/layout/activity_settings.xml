@@ -16,25 +16,25 @@
         android:layout_marginTop="60dp"
         android:layout_marginEnd="167dp"
         android:gravity="center|center_horizontal"
-        android:text="Streak:"
+        android:text="Streak:0"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="24sp"
+        android:textSize="36sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/goalsTitle"
+        app:layout_constraintBottom_toTopOf="@+id/sleepTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/goalsTitle"
+        android:id="@+id/sleepTitle"
         android:layout_width="253dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="81dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="77dp"
         android:gravity="center|center_horizontal"
-        android:text="Settings"
+        android:text="Set sleep reminder"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
@@ -45,12 +45,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/streakCounter" />
 
+    <TextView
+        android:id="@+id/lengthTitle"
+        android:layout_width="253dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="82dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="76dp"
+        android:gravity="center|center_horizontal"
+        android:text="Set length goal"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/sleepGoal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reminderTimeEntry" />
+
     <EditText
         android:id="@+id/reminderTimeEntry"
         android:layout_width="250dp"
         android:layout_height="100dp"
         android:layout_marginStart="81dp"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="80dp"
         android:background="#3F51B5"
         android:backgroundTint="#030A32"
@@ -63,20 +81,20 @@
         android:textColor="#FDFCFC"
         android:textColorHint="#FFFCFC"
         android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@+id/sleepGoal"
+        app:layout_constraintBottom_toTopOf="@+id/lengthTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/goalsTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/sleepTitle" />
 
     <EditText
         android:id="@+id/sleepGoal"
         android:layout_width="250dp"
         android:layout_height="100dp"
         android:layout_marginStart="81dp"
-        android:layout_marginTop="11dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="80dp"
-        android:layout_marginBottom="219dp"
+        android:layout_marginBottom="171dp"
         android:background="#3F51B5"
         android:backgroundTint="#030A32"
         android:ems="10"
@@ -90,7 +108,8 @@
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reminderTimeEntry" />
+        app:layout_constraintTop_toBottomOf="@+id/lengthTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
