@@ -7,8 +7,10 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,6 +24,7 @@ import com.example.spmapp.DeleteDataActivity;
 import com.example.spmapp.Helpers.NotificationReceiver;
 import com.example.spmapp.Models.CreateAnalysis;
 import com.example.spmapp.Models.GlobalChartView;
+import com.example.spmapp.Models.StreakCalculator;
 import com.example.spmapp.Models.Tips;
 import com.example.spmapp.Services.ChartFactory;
 import com.example.spmapp.Helpers.Constants;
@@ -70,6 +73,8 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        calculateStreak();
 
         endTime = General.getUnixTime();
         startTime = endTime - (8*Constants.DAY);
@@ -258,4 +263,14 @@ public class HomeActivity extends AppCompatActivity {
         tipsListView.setAdapter(tipsArrayAdapter);
 
     }
+
+    private void calculateStreak(){
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        long goal = sharedPreferences.getLong("lengthGoal", 28800);
+        //defaults to equivalent of 8 hours, if no goal set by user
+        StreakCalculator streakCalculator = new StreakCalculator(getApplication(), goal);
+        int streakCount = streakCalculator.getStreak(goal);
+        setTitle("Streak: "+streakCount);
+    }
+
 }
